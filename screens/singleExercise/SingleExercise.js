@@ -1,218 +1,208 @@
 import React, {
-  AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
-  View,
-  Navigator,
-  ToolbarAndroid,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  BackAndroid,
-  ScrollView,
-  TextInput
+    AppRegistry,
+    Component,
+    StyleSheet,
+    Text,
+    View,
+    ToolbarAndroid,
+    TouchableHighlight,
+    ScrollView,
+    TextInput
 } from 'react-native';
 
+const styles = StyleSheet.create(require('../global.styles').styles);
+const exerciseStyles = StyleSheet.create(require('./singleExercise.styles').styles);
+
 const Realm = require('realm');
+var realm;
 
 class SingleExercise extends Component {
-  getCurrentDate() {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
+    constructor(props) {
+        super(props);
 
-    if(dd < 10) {
-        dd = '0' + dd
-    } 
+        const ExerciseResults = {
+            name: 'ExerciseResults',
+            properties: {
+                weight_1: {type: 'string', default: '0'},
+                weight_2: {type: 'string', default: '0'},
+                weight_3: {type: 'string', default: '0'},
+                weight_4: {type: 'string', default: '0'},
+                weight_5: {type: 'string', default: '0'},
+                reps_1: {type: 'string', default: '0'},
+                reps_2: {type: 'string', default: '0'},
+                reps_3: {type: 'string', default: '0'},
+                reps_4: {type: 'string', default: '0'},
+                reps_5: {type: 'string', default: '0'}
+            }
+        };
 
-    if(mm < 10) {
-        mm = '0' + mm
-    } 
+        const TotalResults = {
+            name: 'TotalResults',
+            properties: {
+                id: 'string', // workout date
+                muscleKey: 'string',
+                exerciseID: 'int',
+                results: 'ExerciseResults'
+            }
+        };
 
-    today = dd + mm + yyyy;
+        realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 6});
 
-    return today;
-  }
+        this.state = {
+            weight_1: this.getTodayResults()['weight_1'],
+            weight_2: this.getTodayResults()['weight_2'],
+            weight_3: this.getTodayResults()['weight_3'],
+            weight_4: this.getTodayResults()['weight_4'],
+            weight_5: this.getTodayResults()['weight_5'],
+            reps_1: this.getTodayResults()['reps_1'],
+            reps_2: this.getTodayResults()['reps_2'],
+            reps_3: this.getTodayResults()['reps_3'],
+            reps_4: this.getTodayResults()['reps_4'],
+            reps_5: this.getTodayResults()['reps_5']
+        };
+    }
 
+    getCurrentDate() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
 
-  render() {
-    const ExerciseResults = {
-      name: 'ExerciseResults', 
-      properties: {
-        weight_1: {type: 'string', default: '0'},
-        reps_1: {type: 'string', default: '0'},
-        weight_2: {type: 'string', default: '0'},
-        reps_2: {type: 'string', default: '0'},
-        weight_3: {type: 'string', default: '0'},
-        reps_3: {type: 'string', default: '0'},
-        weight_4: {type: 'string', default: '0'},
-        resp_4: {type: 'string', default: '0'},
-        weight_5: {type: 'string', default: '0'},
-        resps_5: {type: 'string', default: '0'},
-      }
-    };
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
 
-    const TotalResults = {
-      name: 'TotalResults', 
-      properties: {
-        id: 'string', // workout date
-        muscle: 'string',
-        exerciseID: 'int',
-        results: 'ExerciseResults'
-      }
-    };
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
 
-    let realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 1});
+        today = yyyy + mm + dd;
 
-  // let realm = new Realm({
-  //    schema: [{
-  //     name: 'Results', 
-  //     properties: {
-  //       id: 'string', // workout date
-  //       muscle: 'string',
-  //       exerciseID: 'int',
-  //       result_1:
-  //     }
-  //   }]
-  // });
+        return today;
+    }
 
-   // realm.write(() => {
-   //   realm.create('TotalResults', {
-   //    id: '1111',
-   //    muscle: 'muscle1',
-   //    exerciseID: 1,
-   //    results: {
-   //      'result_1': 'testresult',
-   //      'result_2': 'testresult',
-   //    }
-   //  });
-   // });
+    saveResults() {
+        var _this = this;
 
-   realm.write(() => {
-    let allResults = realm.objects('TotalResults');
-    realm.delete(allResults);
-   });
+        var todayResults = realm.objects('TotalResults').filtered(
+            'id = "' + this.getCurrentDate() + '" ' +
+            'AND muscleKey="' + _this.props.muscleKey + '"' +
+            'AND exerciseID="' + _this.props.exerciseID + '"');
 
-   console.log(realm.objects('TotalResults'));
+        realm.write(() => {
+            if (todayResults.length) { // update existing
+                todayResults[0].results = {
+                    weight_1: _this.state.weight_1,
+                    weight_2: _this.state.weight_2,
+                    weight_3: _this.state.weight_3,
+                    weight_4: _this.state.weight_4,
+                    weight_5: _this.state.weight_5,
+                    reps_1: _this.state.reps_1,
+                    reps_2: _this.state.reps_2,
+                    reps_3: _this.state.reps_3,
+                    reps_4: _this.state.reps_4,
+                    reps_5: _this.state.reps_5
+                }
+            } else { // create new
+                realm.create('TotalResults', {
+                    id: _this.getCurrentDate(),
+                    muscleKey: _this.props.muscleKey,
+                    exerciseID: _this.props.exerciseID,
+                    results: {
+                        weight_1: _this.state.weight_1,
+                        weight_2: _this.state.weight_2,
+                        weight_3: _this.state.weight_3,
+                        weight_4: _this.state.weight_4,
+                        weight_5: _this.state.weight_5,
+                        reps_1: _this.state.reps_1,
+                        reps_2: _this.state.reps_2,
+                        reps_3: _this.state.reps_3,
+                        reps_4: _this.state.reps_4,
+                        reps_5: _this.state.reps_5
+                    }
+                });
+            }
+        });
 
-    return (
-      <View style={{flex: 1}}>
-        <ToolbarAndroid title={"EasyGym - " + this.props.muscleName} titleColor="#FFF" style={styles.toolbar} />
-        
-        <ScrollView
-            ref={(scrollView) => { _scrollView = scrollView; }}
-            automaticallyAdjustContentInsets={false}
-            scrollEventThrottle={200}
-            style={styles.container}>
+        // delete all results
 
-            <Text style={styles.title}>{this.props.exerciseName} {this.getCurrentDate()}</Text>
+        // realm.write(() => {
+        //     let allResults = realm.objects('TotalResults');
+        //     realm.delete(allResults);
+        // });
 
-          <View style={styles.resultsHolder}>
-          	<TextInput style={styles.resultsInput} keyboardType="numeric" />
-		  	    <Text style={styles.separator}>x</Text>
-		  	    <TextInput style={styles.resultsInput} keyboardType="numeric" />
-          </View>
+        //console.log(this.state);
+        //console.log('total: ', realm.objects('TotalResults'))
+    }
 
-          <View style={styles.resultsHolder}>
-          	<TextInput style={styles.resultsInput} keyboardType="numeric" />
-		  	    <Text style={styles.separator}>x</Text>
-		  	    <TextInput style={styles.resultsInput} keyboardType="numeric" />
-          </View>
+    getTodayResults() {
+        var todayResults = realm.objects('TotalResults').filtered(
+            'id = "' + this.getCurrentDate() + '" ' +
+            'AND muscleKey="' + this.props.muscleKey + '"' +
+            'AND exerciseID="' + this.props.exerciseID + '"');
 
-          <View style={styles.resultsHolder}>
-          	<TextInput style={styles.resultsInput} keyboardType="numeric" />
-		  	    <Text style={styles.separator}>x</Text>
-		  	    <TextInput style={styles.resultsInput} keyboardType="numeric" />
-          </View>
+        if (todayResults.length) {
+            return todayResults[0].results;
+        } else {
+            return {
+                weight_1: '0',
+                weight_2: '0',
+                weight_3: '0',
+                weight_4: '0',
+                weight_5: '0',
+                reps_1: '0',
+                reps_2: '0',
+                reps_3: '0',
+                reps_4: '0',
+                reps_5: '0'
+            }
+        }
+    }
 
-          <View style={styles.resultsHolder}>
-          	<TextInput style={styles.resultsInput} keyboardType="numeric" />
-		  	    <Text style={styles.separator}>x</Text>
-		  	    <TextInput style={styles.resultsInput} keyboardType="numeric" />
-          </View>
+    printInputs() {
+        var inputs = [];
 
-          <View style={styles.resultsHolder}>
-          	<TextInput style={styles.resultsInput} keyboardType="numeric" />
-		  	    <Text style={styles.separator}>x</Text>
-		  	    <TextInput style={styles.resultsInput} keyboardType="numeric" />
-          </View>
+        for (let i = 1; i <= 5; i++) {
+            inputs.push(
+                <View key={i} style={exerciseStyles.resultsHolder}>
+                    <Text style={exerciseStyles.separator}>{i}.</Text>
 
-          <TouchableHighlight onPress={this._onPressButton} style={styles.button}>
-            <Text style={styles.buttonText}>SAVE</Text>
-          </TouchableHighlight>
-         </ScrollView>
-       </View>
-    );
-  }
-};
+                    <TextInput style={exerciseStyles.resultsInput}
+                               keyboardType="numeric"
+                               onChangeText={(val) => this.setState({['weight_' + i]: val})}
+                               placeholder={this.getTodayResults()['weight_' + i]} />
 
-const styles = StyleSheet.create({
-  toolbar: {
-    backgroundColor: '#0091EA',
-    height: 56,
-  },
-  card: {
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    padding: 20,
-    borderBottomWidth: 1
-  },
-  cardTitle: {
-    fontSize: 15,
-    color: '#000'
-  },
-  cardTextHolder: {
-    paddingTop: 16
-  },
-  cardText: {
-    fontSize: 16,
-    lineHeight: 25,
-    color: '#777'
-  },
-   resizeMode: {
-    width: 90,
-    height: 60,
-    borderWidth: 0.5,
-    borderColor: 'black'
-  },
-  resultsHolder: {
-  	flexDirection: 'row',
-  	alignItems: 'center'
-  },
-  resultsInput: {
-  	height: 60,
-  	width: 60,
-  	borderColor: 'gray',
-  	borderWidth: 1,
-    fontSize: 18,
-    padding: 10
-  },
-  separator: {
-    fontSize: 21,
-    color: 'black'
-  },
-  title: {
-    fontSize: 21,
-    fontWeight: 'bold',
-    color: 'black',
-    fontFamily: 'Roboto'
-  },
-  container: {
-    padding: 20
-  },
-  button: {
-    width: 100,
-    padding: 10,
-    backgroundColor: '#0091EA',
-    alignSelf: 'flex-end',
-    marginTop: 20,
-    marginBottom: 40
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: '#FFF'
-  }
-});
+                    <Text style={exerciseStyles.separator}>x</Text>
+
+                    <TextInput style={exerciseStyles.resultsInput}
+                               keyboardType="numeric"
+                               onChangeText={(val) => this.setState({['reps_' + i]: val})}
+                               placeholder={this.getTodayResults()['reps_' + i]} />
+                </View>
+            );
+        }
+
+        return inputs;
+    }
+
+    render() {
+        return (
+            <View style={{flex: 1}}>
+                <ToolbarAndroid title={"EasyGym - " + this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
+
+                <ScrollView style={exerciseStyles.container}>
+
+                    <Text style={exerciseStyles.title}>{this.props.exerciseName}</Text>
+
+                    {this.printInputs()}
+
+                    <TouchableHighlight onPress={this.saveResults.bind(this)} style={exerciseStyles.button}>
+                        <Text style={exerciseStyles.buttonText}>SAVE</Text>
+                    </TouchableHighlight>
+                </ScrollView>
+            </View>
+        );
+    }
+}
 
 module.exports = SingleExercise;

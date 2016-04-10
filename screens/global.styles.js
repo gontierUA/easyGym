@@ -1,7 +1,10 @@
-const styles = StyleSheet.create({
+export var styles = {
     toolbar: {
         backgroundColor: '#0091EA',
         height: 56
+    },
+    screenHolder: {
+        backgroundColor: '#FFF'
     },
     card: {
         backgroundColor: '#FFF',
@@ -27,4 +30,4 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'black'
     }
-});
+};
