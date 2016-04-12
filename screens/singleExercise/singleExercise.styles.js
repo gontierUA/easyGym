@@ -21,17 +21,22 @@ export var styles = {
         fontWeight: 'bold',
         color: 'black'
     },
-    container: {
-        padding: 20,
-        backgroundColor: '#FFF'
+    buttonsHolder: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'stretch',
+        marginTop: 40,
+        marginBottom: 40
     },
     button: {
-        width: 100,
+        width: 140,
         padding: 15,
-        backgroundColor: '#0091EA',
-        alignSelf: 'flex-end',
-        marginTop: 20,
-        marginBottom: 40
+        backgroundColor: '#0091EA'
+    },
+    buttonSave: {
+        width: 140,
+        padding: 15,
+        backgroundColor: '#4CAF50'
     },
     buttonText: {
         textAlign: 'center',

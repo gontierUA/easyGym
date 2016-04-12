@@ -6,11 +6,16 @@ export var styles = {
     screenHolder: {
         backgroundColor: '#FFF'
     },
+    container: {
+        padding: 20,
+        backgroundColor: '#FFF'
+    },
     card: {
         backgroundColor: '#FFF',
         justifyContent: 'center',
         padding: 20,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderColor: '#e0e0e0'
     },
     cardTitle: {
         fontSize: 15,
@@ -23,11 +28,5 @@ export var styles = {
         fontSize: 16,
         lineHeight: 25,
         color: '#777'
-    },
-    resizeMode: {
-        width: 90,
-        height: 60,
-        borderWidth: 0.5,
-        borderColor: 'black'
     }
 };

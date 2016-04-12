@@ -1,12 +1,12 @@
 export var Chest = [
   {
     id: 0,
-    name: 'Жим лежа',
+    name: 'Жим лежа в Смите',
     type: 'chest'
   },
   {
     id: 1,
-    name: 'Жим лежа под углом',
+    name: 'Жим лежа под углом в Смите',
     type: 'chest'
   },
   {
@@ -27,6 +27,16 @@ export var Chest = [
   {
     id: 5,
     name: 'Брусья',
+    type: 'chest'
+  },
+  {
+    id: 6,
+    name: 'Жим лежа под углом',
+    type: 'chest'
+  },
+  {
+    id: 7,
+    name: 'Жим лежа',
     type: 'chest'
   }
 ];

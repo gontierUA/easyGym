@@ -130,9 +130,6 @@ class SingleExercise extends Component {
         //     let allResults = realm.objects('TotalResults');
         //     realm.delete(allResults);
         // });
-
-        //console.log(this.state);
-        //console.log('total: ', realm.objects('TotalResults'))
     }
 
     getTodayResults() {
@@ -185,20 +182,35 @@ class SingleExercise extends Component {
         return inputs;
     }
 
+    showStatistics() {
+        this.props.navigator.push({
+            id: 'Statistics',
+            muscleKey: this.props.muscleKey,
+            exerciseID: this.props.exerciseID,
+            exerciseName: this.props.exerciseName
+        });
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
                 <ToolbarAndroid title={"EasyGym - " + this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
 
-                <ScrollView style={exerciseStyles.container}>
+                <ScrollView style={styles.container}>
 
                     <Text style={exerciseStyles.title}>{this.props.exerciseName}</Text>
 
                     {this.printInputs()}
 
-                    <TouchableHighlight onPress={this.saveResults.bind(this)} style={exerciseStyles.button}>
-                        <Text style={exerciseStyles.buttonText}>SAVE</Text>
-                    </TouchableHighlight>
+                    <View style={exerciseStyles.buttonsHolder}> 
+                        <TouchableHighlight onPress={this.showStatistics.bind(this)} style={exerciseStyles.button}>
+                            <Text style={exerciseStyles.buttonText}>СТАТИСТИКА</Text>
+                        </TouchableHighlight>
+                        
+                        <TouchableHighlight onPress={this.saveResults.bind(this)} style={exerciseStyles.buttonSave}>
+                            <Text style={exerciseStyles.buttonText}>СОХРАНИТЬ</Text>
+                        </TouchableHighlight>
+                    </View>
                 </ScrollView>
             </View>
         );

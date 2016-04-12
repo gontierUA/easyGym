@@ -13,6 +13,7 @@ import React, {
 import Muscles from './screens/muscles/Muscles.js';
 import Exercises from './screens/exercises/Exercises.js';
 import SingleExercise from './screens/singleExercise/SingleExercise.js';
+import Statistics from './screens/statistics/Statistics.js';
 
 var _navigator;
 
@@ -35,8 +36,13 @@ class EasyGym extends Component{
         );
     }
 
-    configureScene(route, routeStack){
-        return Navigator.SceneConfigs.HorizontalSwipeJump
+    configureScene(route, routeStack) {
+        switch (route.id) {
+            case 'Statistics':
+                return Navigator.SceneConfigs.FloatFromBottom;
+            default:
+                return Navigator.SceneConfigs.HorizontalSwipeJump;
+        }
     }
 
     navigatorRenderScene(route, navigator) {
@@ -54,6 +60,13 @@ class EasyGym extends Component{
                     exerciseName={route.exerciseName}
                     muscleKey={route.muscleKey}
                     muscleNameRus={route.muscleNameRus} 
+                />);
+            case 'Statistics':
+                return (<Statistics 
+                    navigator={navigator}
+                    exerciseID={route.exerciseID}
+                    exerciseName={route.exerciseName}
+                    muscleKey={route.muscleKey}
                 />);
         }
     }
