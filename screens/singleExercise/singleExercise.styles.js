@@ -29,14 +29,10 @@ export var styles = {
         marginBottom: 40
     },
     button: {
-        width: 140,
-        padding: 15,
         backgroundColor: '#0091EA'
     },
     buttonSave: {
-        width: 140,
-        padding: 15,
-        backgroundColor: '#4CAF50'
+        backgroundColor: '#00C853'
     },
     buttonText: {
         textAlign: 'center',

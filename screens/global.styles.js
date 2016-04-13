@@ -1,7 +1,8 @@
 export var styles = {
     toolbar: {
         backgroundColor: '#0091EA',
-        height: 56
+        height: 56,
+        elevation: 5
     },
     screenHolder: {
         backgroundColor: '#FFF'
@@ -28,5 +29,11 @@ export var styles = {
         fontSize: 16,
         lineHeight: 25,
         color: '#777'
+    },
+    button: {
+        width: 140,
+        padding: 15,
+        elevation: 3,
+        margin: 5
     }
 };

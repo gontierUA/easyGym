@@ -15,6 +15,8 @@ var moduleChest = require('./db/db_chest').Chest;
 var moduleLegs = require('./db/db_legs').Legs;
 var moduleShoulders = require('./db/db_shoulders').Shoulders;
 var moduleBiceps = require('./db/db_biceps').Biceps;
+var moduleBack = require('./db/db_back').Back;
+var moduleTriceps = require('./db/db_triceps').Triceps;
 
 class Exercises extends Component {
     showSingleExercise(exerciseID, exerciseName) {
@@ -32,7 +34,7 @@ class Exercises extends Component {
         var tempExercises;
         var _this = this;
 
-        var exercises = _.concat(moduleChest, moduleLegs, moduleShoulders, moduleBiceps);
+        var exercises = _.concat(moduleChest, moduleLegs, moduleShoulders, moduleBiceps, moduleBack, moduleTriceps);
 
         tempExercises = _.filter(exercises, ['type', _this.props.muscleKey]);
 
@@ -52,7 +54,7 @@ class Exercises extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <ToolbarAndroid title={"EasyGym - " + this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
+                <ToolbarAndroid title={this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
 
                 <ScrollView style={styles.screenHolder}>
                     <View>{this.showExercises()}</View>

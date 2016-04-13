@@ -194,7 +194,7 @@ class SingleExercise extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <ToolbarAndroid title={"EasyGym - " + this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
+                <ToolbarAndroid title={this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
 
                 <ScrollView style={styles.container}>
 
@@ -203,11 +203,17 @@ class SingleExercise extends Component {
                     {this.printInputs()}
 
                     <View style={exerciseStyles.buttonsHolder}> 
-                        <TouchableHighlight onPress={this.showStatistics.bind(this)} style={exerciseStyles.button}>
+                        <TouchableHighlight
+                            onPress={this.showStatistics.bind(this)}
+                            style={[styles.button, exerciseStyles.button]}
+                            underlayColor="#00B0FF">
                             <Text style={exerciseStyles.buttonText}>СТАТИСТИКА</Text>
                         </TouchableHighlight>
                         
-                        <TouchableHighlight onPress={this.saveResults.bind(this)} style={exerciseStyles.buttonSave}>
+                        <TouchableHighlight
+                            onPress={this.saveResults.bind(this)}
+                            style={[styles.button, exerciseStyles.buttonSave]}
+                            underlayColor="#00E676">
                             <Text style={exerciseStyles.buttonText}>СОХРАНИТЬ</Text>
                         </TouchableHighlight>
                     </View>
