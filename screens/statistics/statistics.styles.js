@@ -8,11 +8,11 @@ export var styles = {
         borderColor: '#e0e0e0',
         paddingLeft: 20,
         paddingRight: 20,
-        paddingBottom: 10,
-        paddingTop: 10
+        paddingBottom: 0,
+        paddingTop: 5
     },
     text: {
-        fontSize: 14,
+        fontSize: 13,
         color: '#000',
         padding: 3
     },

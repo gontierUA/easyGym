@@ -14,6 +14,12 @@
         android:defaultValue="true"
         />
     <CheckBoxPreference
+        android:key="js_minify_debug"
+        android:title="JS Minify"
+        android:summary="Load JavaScript bundle with minify=true for debugging minification issues."
+        android:defaultValue="false"
+        />
+    <CheckBoxPreference
         android:key="animations_debug"
         android:title="Animations FPS Summaries"
         android:summary="At the end of animations, Toasts and logs to logcat debug information about the FPS during that transition. Currently only supported for transitions (animated navigations)."
@@ -32,4 +38,4 @@
         />
   </PreferenceCategory>
 </PreferenceScreen>
-<!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.22.2/res/xml/preferences.xml -->
+<!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.24.1/res/xml/preferences.xml -->

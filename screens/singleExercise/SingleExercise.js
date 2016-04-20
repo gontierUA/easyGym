@@ -13,40 +13,11 @@ import React, {
 const styles = StyleSheet.create(require('../global.styles').styles);
 const exerciseStyles = StyleSheet.create(require('./singleExercise.styles').styles);
 
-const Realm = require('realm');
-var realm;
+const Database = require('../../database/db.js').Database();
 
 class SingleExercise extends Component {
     constructor(props) {
         super(props);
-
-        const ExerciseResults = {
-            name: 'ExerciseResults',
-            properties: {
-                weight_1: {type: 'string', default: '0'},
-                weight_2: {type: 'string', default: '0'},
-                weight_3: {type: 'string', default: '0'},
-                weight_4: {type: 'string', default: '0'},
-                weight_5: {type: 'string', default: '0'},
-                reps_1: {type: 'string', default: '0'},
-                reps_2: {type: 'string', default: '0'},
-                reps_3: {type: 'string', default: '0'},
-                reps_4: {type: 'string', default: '0'},
-                reps_5: {type: 'string', default: '0'}
-            }
-        };
-
-        const TotalResults = {
-            name: 'TotalResults',
-            properties: {
-                id: 'string', // workout date
-                muscleKey: 'string',
-                exerciseID: 'int',
-                results: 'ExerciseResults'
-            }
-        };
-
-        realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 6});
 
         this.state = {
             weight_1: this.getTodayResults()['weight_1'],
@@ -84,26 +55,23 @@ class SingleExercise extends Component {
     saveResults() {
         var _this = this;
 
-        var todayResults = realm.objects('TotalResults').filtered(
-            'id = "' + this.getCurrentDate() + '" ' +
-            'AND muscleKey="' + _this.props.muscleKey + '"' +
-            'AND exerciseID="' + _this.props.exerciseID + '"');
+        var todayResults = Database.getExerciseStats(this.props.muscleKey, this.props.exerciseID, this.getCurrentDate());
 
-        realm.write(() => {
-            if (todayResults.length) { // update existing
-                todayResults[0].results = {
-                    weight_1: _this.state.weight_1,
-                    weight_2: _this.state.weight_2,
-                    weight_3: _this.state.weight_3,
-                    weight_4: _this.state.weight_4,
-                    weight_5: _this.state.weight_5,
-                    reps_1: _this.state.reps_1,
-                    reps_2: _this.state.reps_2,
-                    reps_3: _this.state.reps_3,
-                    reps_4: _this.state.reps_4,
-                    reps_5: _this.state.reps_5
-                }
-            } else { // create new
+        if (todayResults.length) { // update existing
+            todayResults[0].results = {
+                weight_1: _this.state.weight_1,
+                weight_2: _this.state.weight_2,
+                weight_3: _this.state.weight_3,
+                weight_4: _this.state.weight_4,
+                weight_5: _this.state.weight_5,
+                reps_1: _this.state.reps_1,
+                reps_2: _this.state.reps_2,
+                reps_3: _this.state.reps_3,
+                reps_4: _this.state.reps_4,
+                reps_5: _this.state.reps_5
+            }
+        } else {
+            realm.write(() => {
                 realm.create('TotalResults', {
                     id: _this.getCurrentDate(),
                     muscleKey: _this.props.muscleKey,
@@ -121,25 +89,36 @@ class SingleExercise extends Component {
                         reps_5: _this.state.reps_5
                     }
                 });
-            }
-        });
-
-        // delete all results
-
-        // realm.write(() => {
-        //     let allResults = realm.objects('TotalResults');
-        //     realm.delete(allResults);
-        // });
+            });
+        }
     }
 
     getTodayResults() {
-        var todayResults = realm.objects('TotalResults').filtered(
-            'id = "' + this.getCurrentDate() + '" ' +
-            'AND muscleKey="' + this.props.muscleKey + '"' +
-            'AND exerciseID="' + this.props.exerciseID + '"');
+        var todayResults = Database.getExerciseStats(this.props.muscleKey, this.props.exerciseID, this.getCurrentDate());
 
         if (todayResults.length) {
             return todayResults[0].results;
+        } else {
+            return {
+                weight_1: '0',
+                weight_2: '0',
+                weight_3: '0',
+                weight_4: '0',
+                weight_5: '0',
+                reps_1: '0',
+                reps_2: '0',
+                reps_3: '0',
+                reps_4: '0',
+                reps_5: '0'
+            }
+        }
+    }
+    
+    getLatestWorkoutResults() {
+        var latestResults = Database.getLatestStats(this.props.muscleKey, this.props.exerciseID);
+
+        if (!_.isEmpty(latestResults)) {
+            return latestResults;
         } else {
             return {
                 weight_1: '0',
@@ -167,14 +146,14 @@ class SingleExercise extends Component {
                     <TextInput style={exerciseStyles.resultsInput}
                                keyboardType="numeric"
                                onChangeText={(val) => this.setState({['weight_' + i]: val})}
-                               placeholder={this.getTodayResults()['weight_' + i]} />
+                               placeholder={this.getLatestWorkoutResults()['weight_' + i]} />
 
                     <Text style={exerciseStyles.separator}>x</Text>
 
                     <TextInput style={exerciseStyles.resultsInput}
                                keyboardType="numeric"
                                onChangeText={(val) => this.setState({['reps_' + i]: val})}
-                               placeholder={this.getTodayResults()['reps_' + i]} />
+                               placeholder={this.getLatestWorkoutResults()['reps_' + i]} />
                 </View>
             );
         }

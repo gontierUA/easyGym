@@ -12,49 +12,18 @@ import React, {
 const styles = StyleSheet.create(require('../global.styles').styles);
 const statisticsStyles = StyleSheet.create(require('./statistics.styles').styles);
 
-const Realm = require('realm');
-var realm;
+const Database = require('../../database/db.js').Database();
 
 class Statistics extends Component {
     constructor(props) {
         super(props);
-
-        const ExerciseResults = {
-            name: 'ExerciseResults',
-            properties: {
-                weight_1: {type: 'string', default: '0'},
-                weight_2: {type: 'string', default: '0'},
-                weight_3: {type: 'string', default: '0'},
-                weight_4: {type: 'string', default: '0'},
-                weight_5: {type: 'string', default: '0'},
-                reps_1: {type: 'string', default: '0'},
-                reps_2: {type: 'string', default: '0'},
-                reps_3: {type: 'string', default: '0'},
-                reps_4: {type: 'string', default: '0'},
-                reps_5: {type: 'string', default: '0'}
-            }
-        };
-
-        const TotalResults = {
-            name: 'TotalResults',
-            properties: {
-                id: 'string', // workout date
-                muscleKey: 'string',
-                exerciseID: 'int',
-                results: 'ExerciseResults'
-            }
-        };
-
-        realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 6});
     }
 
     showStatistics() {
         var statisticsCard = [];
         var i = 1;
 
-        var results = realm.objects('TotalResults').filtered(
-            'muscleKey="' + this.props.muscleKey + '"' +
-            'AND exerciseID="' + this.props.exerciseID + '"');
+        var results = Database.getExerciseStats(this.props.muscleKey, this.props.exerciseID);
 
         _.forEach(results, function(value, key) {
             statisticsCard.push(
