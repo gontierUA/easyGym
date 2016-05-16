@@ -1,7 +1,11 @@
+import Dimensions from 'Dimensions';
+
+const TOOLBAR_HEIGHT = 56;
+
 export var styles = {
     toolbar: {
         backgroundColor: '#0091EA',
-        height: 56,
+        height: TOOLBAR_HEIGHT,
         elevation: 5
     },
     screenHolder: {
@@ -35,5 +39,18 @@ export var styles = {
         padding: 15,
         elevation: 3,
         margin: 5
+    },
+    video: {
+        height: Dimensions.get('window').height - TOOLBAR_HEIGHT - 90
+    },
+    screenTitle: {
+        fontSize: 21,
+        fontWeight: 'bold',
+        color: 'black',
+        marginBottom: 10
+    },
+    thumbnail: {
+        width: 320,
+        height: 180
     }
 };

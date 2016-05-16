@@ -11,7 +11,7 @@ export const Shoulders = [
   },
   {
     id: 3,
-    name: 'Разведение гантелей в стороны',
+    name: 'Махи гантелей в стороны',
     type: 'shoulders'
   },
   {

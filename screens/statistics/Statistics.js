@@ -12,23 +12,54 @@ import React, {
 const styles = StyleSheet.create(require('../global.styles').styles);
 const statisticsStyles = StyleSheet.create(require('./statistics.styles').styles);
 
-const Database = require('../../database/db.js').Database();
+const Realm = require('realm');
+var realm;
 
 class Statistics extends Component {
     constructor(props) {
         super(props);
+
+        const ExerciseResults = {
+            name: 'ExerciseResults',
+            properties: {
+                weight_1: {type: 'string', default: '0'},
+                weight_2: {type: 'string', default: '0'},
+                weight_3: {type: 'string', default: '0'},
+                weight_4: {type: 'string', default: '0'},
+                weight_5: {type: 'string', default: '0'},
+                reps_1: {type: 'string', default: '0'},
+                reps_2: {type: 'string', default: '0'},
+                reps_3: {type: 'string', default: '0'},
+                reps_4: {type: 'string', default: '0'},
+                reps_5: {type: 'string', default: '0'}
+            }
+        };
+
+        const TotalResults = {
+            name: 'TotalResults',
+            properties: {
+                id: 'string', // workout date
+                muscleKey: 'string',
+                exerciseID: 'int',
+                results: 'ExerciseResults'
+            }
+        };
+
+        realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 6});
     }
 
     showStatistics() {
         var statisticsCard = [];
         var i = 1;
 
-        var results = Database.getExerciseStats(this.props.muscleKey, this.props.exerciseID);
+        var results = realm.objects('TotalResults').filtered(
+            'muscleKey="' + this.props.muscleKey + '"' +
+            'AND exerciseID="' + this.props.exerciseID + '"');
 
-        _.forEach(results, function(value, key) {
+        _.forEachRight(results, function(value, key) {
             statisticsCard.push(
                 <View key={i} style={statisticsStyles.holder}>
-                    <Text style={statisticsStyles.text}>{value.id.substring(6, 8)}/{value.id.substring(4, 6)}/{value.id.substring(0, 4)} </Text>
+                    <Text style={statisticsStyles.date}>{value.id.substring(6, 8)}/{value.id.substring(4, 6)}/{value.id.substring(0, 4)} </Text>
                     <Text style={statisticsStyles.text}> {value.results.weight_1}x{value.results.reps_1}</Text>
                     <Text style={statisticsStyles.text}> {value.results.weight_2}x{value.results.reps_2}</Text>
                     <Text style={statisticsStyles.text}> {value.results.weight_3}x{value.results.reps_3}</Text>
@@ -49,7 +80,7 @@ class Statistics extends Component {
                 <ToolbarAndroid title={"Cтатистика"} titleColor="#FFF" style={styles.toolbar} />
 
                 <ScrollView style={statisticsStyles.container}>
-                    <Text style={statisticsStyles.title}>{this.props.exerciseName}</Text>
+                    <Text style={[styles.screenTitle, statisticsStyles.title]}>{this.props.exerciseName}</Text>
 
                     {this.showStatistics()}
                 </ScrollView>

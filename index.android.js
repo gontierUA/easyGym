@@ -14,6 +14,7 @@ import Muscles from './screens/muscles/Muscles.js';
 import Exercises from './screens/exercises/Exercises.js';
 import SingleExercise from './screens/singleExercise/SingleExercise.js';
 import Statistics from './screens/statistics/Statistics.js';
+import AboutExercise from './screens/aboutExercise/AboutExercise.js';
 
 var _navigator;
 
@@ -31,7 +32,7 @@ class EasyGym extends Component{
             <Navigator
                 initialRoute={{id: 'Muscles'}}
                 renderScene={this.navigatorRenderScene}
-                configureScene={ this.configureScene }
+                configureScene={this.configureScene}
             />
         );
     }
@@ -39,6 +40,7 @@ class EasyGym extends Component{
     configureScene(route, routeStack) {
         switch (route.id) {
             case 'Statistics':
+            case 'AboutExercise':
                 return Navigator.SceneConfigs.FloatFromBottom;
             default:
                 return Navigator.SceneConfigs.HorizontalSwipeJump;
@@ -63,6 +65,13 @@ class EasyGym extends Component{
                 />);
             case 'Statistics':
                 return (<Statistics 
+                    navigator={navigator}
+                    exerciseID={route.exerciseID}
+                    exerciseName={route.exerciseName}
+                    muscleKey={route.muscleKey}
+                />);
+            case 'AboutExercise':
+                return (<AboutExercise
                     navigator={navigator}
                     exerciseID={route.exerciseID}
                     exerciseName={route.exerciseName}
