@@ -5,13 +5,16 @@ import React, {
     Text,
     View,
     ToolbarAndroid,
-    TouchableNativeFeedback,
+    TouchableHighlight,
     ScrollView,
     WebView,
     Image
 } from 'react-native';
 
+var ProgressBar = require('ProgressBarAndroid');
+
 const styles = StyleSheet.create(require('../global.styles').styles);
+const videoStyles = StyleSheet.create(require('./videoExercise.styles').styles);
 
 class AboutExercise extends Component {
     constructor(props) {
@@ -28,7 +31,7 @@ class AboutExercise extends Component {
         var _this= this;
 
         fetch('https://www.googleapis.com/youtube/v3/search?part=snippet' +
-            '&order=viewCount' +
+            '&order=relevance' +
             '&q=тренировка+' + this.props.exerciseName +
             '&type=video' +
             '&videoDefinition=high' +
@@ -37,15 +40,22 @@ class AboutExercise extends Component {
             .then((response) => response.json())
             .then((responseText) => {
                 _.forEach(responseText.items, function(value, key) {
+
+
+
                     _this.output.push(
-                        <View key={key}>
-                            <Text>{value.snippet.title}</Text>
-                            <Text>{value.snippet.channelTitle}</Text>
-                            <Image
-                                style={styles.thumbnail}
-                                source={{uri: value.snippet.thumbnails.medium.url}}
-                            />
-                        </View>
+                        <TouchableHighlight style={videoStyles.videoCard} key={key}>
+                            <View>
+                                <Image
+                                    style={videoStyles.thumbnail}
+                                    source={{uri: value.snippet.thumbnails.medium.url}}
+                                />
+                                <View style={videoStyles.textHolder}>
+                                    <Text>{value.snippet.channelTitle}</Text>
+                                    <Text style={videoStyles.text}>{value.snippet.title}</Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
                     );
                 });
 
@@ -71,12 +81,16 @@ class AboutExercise extends Component {
         if (this.state.loaded) {
             return (
                 <View style={{flex: 1}}>
-                    <ToolbarAndroid title={"О упражнении"} titleColor="#FFF" style={styles.toolbar} />
+                    <ToolbarAndroid
+                        title={"Видео"}
+                        subtitle={this.props.exerciseName}
+                        titleColor="#FFF"
+                        subtitleColor="#FFF"
+                        style={styles.toolbar} />
 
-                    <ScrollView style={styles.container}>
-                        <Text style={styles.screenTitle}>{this.props.exerciseName}</Text>
-
+                    <ScrollView style={videoStyles.wrapper}>
                         {this.output}
+                        <View style={videoStyles.floater}></View>
                     </ScrollView>
                 </View>
             );
@@ -85,12 +99,15 @@ class AboutExercise extends Component {
 
             return (
                 <View style={{flex: 1}}>
-                    <ToolbarAndroid title={"О упражнении"} titleColor="#FFF" style={styles.toolbar} />
+                    <ToolbarAndroid
+                        title={"Видео"}
+                        subtitle={this.props.exerciseName}
+                        titleColor="#FFF"
+                        subtitleColor="#FFF"
+                        style={styles.toolbar} />
 
-                    <ScrollView style={styles.container}>
-                        <Text style={styles.screenTitle}>{this.props.exerciseName}</Text>
-
-                        <Text>Loading...</Text>
+                    <ScrollView justifyContent="center" style={videoStyles.wrapper}>
+                        <ProgressBar styleAttr="Normal" />
                     </ScrollView>
                 </View>
             );

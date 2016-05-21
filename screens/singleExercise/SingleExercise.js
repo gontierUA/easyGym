@@ -284,7 +284,9 @@ class SingleExercise extends Component {
             <View style={{flex: 1}}>
                 <ToolbarAndroid
                     title={this.props.muscleNameRus}
+                    subtitle={this.props.exerciseName}
                     titleColor="#FFF"
+                    subtitleColor="#FFF"
                     style={styles.toolbar}
                     actions={[
                      {title: 'Статистика', icon: require('../../img/ico_stats.png'), show: 'always'},
@@ -292,9 +294,7 @@ class SingleExercise extends Component {
                     ]}
                     onActionSelected={this.onActionSelected.bind(this)} />
 
-                <ScrollView style={styles.container}>
-
-                    <Text style={styles.screenTitle}>{this.props.exerciseName}</Text>
+                <ScrollView style={exerciseStyles.container}>
 
                     <View style={exerciseStyles.header}>
                         <Text style={exerciseStyles.headerText}>вес</Text>
@@ -308,7 +308,7 @@ class SingleExercise extends Component {
                             onPress={this.saveResults.bind(this)}
                             style={[styles.button, exerciseStyles.buttonSave]}
                             underlayColor="#00E676">
-                            <Text style={exerciseStyles.buttonText}>SAVE</Text>
+                            <Text style={exerciseStyles.buttonText}>СОХРАНИТЬ</Text>
                         </TouchableHighlight>
                     </View>
                 </ScrollView>

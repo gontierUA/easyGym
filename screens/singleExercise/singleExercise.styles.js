@@ -1,4 +1,8 @@
 export var styles = {
+    container: {
+        padding: 15,
+        backgroundColor: '#FFF'
+    },
     resultsHolder: {
         flexDirection: 'row',
         alignItems: 'center'
@@ -20,7 +24,7 @@ export var styles = {
         marginLeft: 8,
         marginRight: 8
     },
-    buttonsHolder: { // TODO: remove?
+    buttonsHolder: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'stretch',

@@ -77,11 +77,14 @@ class Statistics extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <ToolbarAndroid title={"Cтатистика"} titleColor="#FFF" style={styles.toolbar} />
+                <ToolbarAndroid
+                    title={"Cтатистика"}
+                    subtitle={this.props.exerciseName}
+                    titleColor="#FFF"
+                    subtitleColor="#FFF"
+                    style={styles.toolbar} />
 
                 <ScrollView style={statisticsStyles.container}>
-                    <Text style={[styles.screenTitle, statisticsStyles.title]}>{this.props.exerciseName}</Text>
-
                     {this.showStatistics()}
                 </ScrollView>
             </View>
