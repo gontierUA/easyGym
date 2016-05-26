@@ -8,5 +8,5 @@ React-Native workout application for android.
 - Youtube API
 
 ##Installation
-Once you have downloaded or cloned this repository, run npm install inside the directory.
+Once you have downloaded or cloned this repository, run `npm install` inside the directory.
 
