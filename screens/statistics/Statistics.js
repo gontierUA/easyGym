@@ -10,6 +10,8 @@ import {
     ScrollView
 } from 'react-native';
 
+var _ = require('lodash');
+
 const styles = StyleSheet.create(require('../global.styles').styles);
 const statisticsStyles = StyleSheet.create(require('./statistics.styles').styles);
 
