@@ -12,6 +12,8 @@ import {
     Image
 } from 'react-native';
 
+var _ = require('lodash');
+
 var ProgressBar = require('ProgressBarAndroid');
 
 const styles = StyleSheet.create(require('../global.styles').styles);

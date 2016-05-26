@@ -14,6 +14,8 @@ import {
     WebView
 } from 'react-native';
 
+var _ = require('lodash');
+
 const styles = StyleSheet.create(require('../global.styles').styles);
 const exerciseStyles = StyleSheet.create(require('./singleExercise.styles').styles);
 
