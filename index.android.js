@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
     AppRegistry,
-    Component,
     Navigator,
     BackAndroid
 } from 'react-native';

@@ -23,6 +23,13 @@
         <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-e6f50d2cc0d11627803c198362f160413af96cdb.jar" />
     </item>
     <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ed1c5bed21041f36b3eabf8afddca80e5d1c49b0">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-f047199964d533523ef0a0e0d1552966b5e93318.jar" />
+    </item>
+    <item
         jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -72,13 +79,6 @@
         <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-1d442cbee01ce3cfc18e3f573f7dc1e9a70448a0.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/jars/libs/infer-annotations-1.5.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="12b559f4bf81fa45adf2235efa0c2fbd9d933f1e">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-6f889dd9800c535abcb36ebe20391da9fd28a86f.jar" />
-    </item>
-    <item
         jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -121,11 +121,11 @@
         <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-59a0277ffae954ba0751c60ddd3254bcda638525.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/jars/classes.jar"
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/jars/libs/infer-annotations-1.5.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="5453085bfeee55acfa0235a5dc1477e9126013db">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-6be853fcc856533504059307ec566a0ae017abcc.jar" />
+        sha1="79f21e7305d968c2c492a1987ea3ced5ff65fdeb">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-47417f5433e2c9a1b61b30e4e8832dca314c2ca6.jar" />
     </item>
     <item
         jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"

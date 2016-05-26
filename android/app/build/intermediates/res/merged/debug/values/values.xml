@@ -31,7 +31,7 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/res/values/values.xml -->
+    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/res/values/values.xml -->
     <eat-comment/>
     <color name="catalyst_redbox_background">#eecc0000</color>
     <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
@@ -222,12 +222,12 @@
     <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">EasyGym</string>
-    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/res/values/values.xml -->
+    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/res/values/values.xml -->
     <eat-comment/>
     <string name="catalyst_debugjs" project="catalyst" translatable="false">Debug JS Remotely</string>
-    <string name="catalyst_debugjs_off" project="catalyst" translatable="false">Stop JS Remotely Debugging</string>
-    <string name="catalyst_element_inspector" project="catalyst" translatable="false">Show Inspector</string>
-    <string name="catalyst_element_inspector_off" project="catalyst" translatable="false">Hide Inspector</string>
+    <string name="catalyst_debugjs_off" project="catalyst" translatable="false">Stop Remote JS Debugging</string>
+    <string name="catalyst_element_inspector" project="catalyst" translatable="false">Toggle Inspector</string>
+    <string name="catalyst_heap_capture" project="catalyst" translatable="false">Capture Heap</string>
     <string name="catalyst_hot_module_replacement" project="catalyst" translatable="false">Enable Hot Reloading</string>
     <string name="catalyst_hot_module_replacement_off" project="catalyst" translatable="false">Disable Hot Reloading</string>
     <string name="catalyst_jsload_error" project="catalyst" translatable="false">Unable to download JS bundle. Did you forget to start the development server or connect your device?</string>
@@ -251,7 +251,7 @@
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/res/values/values.xml -->
+    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/res/values/values.xml -->
     <eat-comment/>
     <style name="Animation.Catalyst.RedBox" parent="@android:style/Animation">
     <item name="android:windowEnterAnimation">@anim/catalyst_push_up_in</item>
@@ -1177,9 +1177,13 @@
         <item name="android:minWidth">56dp</item>
         <item name="android:scaleType">center</item>
     </style>
-    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/res/values/values.xml -->
+    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/res/values/values.xml -->
     <eat-comment/>
-    <style name="DialogAnimation">
+    <style name="DialogAnimationFade">
+    <item name="android:windowEnterAnimation">@anim/fade_in</item>
+    <item name="android:windowExitAnimation">@anim/fade_out</item>
+  </style>
+    <style name="DialogAnimationSlide">
     <item name="android:windowEnterAnimation">@anim/slide_up</item>
     <item name="android:windowExitAnimation">@anim/slide_down</item>
   </style>
@@ -1392,7 +1396,7 @@
     </style>
     <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
     </style>
-    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/res/values/values.xml -->
+    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme"/>
     <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/values/values.xml -->
@@ -1419,7 +1423,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.25.1/res/values/values.xml -->
+    <!-- From: file:/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.Catalyst"/>
     <style name="Theme.Catalyst.RedBox" parent="@style/Theme.AppCompat.DialogWhenLarge">
@@ -1434,8 +1438,11 @@
     <item name="android:windowIsFloating">false</item>
     <item name="android:windowBackground">@android:color/transparent</item>
   </style>
-    <style name="Theme.FullScreenDialogAnimated" parent="Theme.FullScreenDialog">
-    <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    <style name="Theme.FullScreenDialogAnimatedFade" parent="Theme.FullScreenDialog">
+    <item name="android:windowAnimationStyle">@style/DialogAnimationFade</item>
+  </style>
+    <style name="Theme.FullScreenDialogAnimatedSlide" parent="Theme.FullScreenDialog">
+    <item name="android:windowAnimationStyle">@style/DialogAnimationSlide</item>
   </style>
     <style name="Theme.ReactNative.AppCompat.Light" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@android:color/black</item>

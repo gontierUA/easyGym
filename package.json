@@ -7,10 +7,9 @@
   },
   "dependencies": {
     "lodash": "^4.13.1",
-    "react": "^0.14.8",
-    "react-native": "^0.25.1",
+    "react": "~15.0.2",
+    "react-native": "^0.26.2",
     "react-native-local-mongodb": "^1.8.1",
-    "react-native-youtube": "^0.6.0",
     "realm": "^0.11.1"
   }
 }
