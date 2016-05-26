@@ -1,4 +1,6 @@
-import React, {
+import React from 'react';
+
+import {
     AppRegistry,
     Component,
     StyleSheet,
@@ -7,7 +9,6 @@ import React, {
     ToolbarAndroid,
     TouchableHighlight,
     ScrollView,
-    WebView,
     Image
 } from 'react-native';
 
@@ -27,7 +28,7 @@ class AboutExercise extends Component {
         this.output = [];
     }
 
-    videoListItem(items) {
+    videoListItem() {
         var _this= this;
 
         fetch('https://www.googleapis.com/youtube/v3/search?part=snippet' +
@@ -40,11 +41,12 @@ class AboutExercise extends Component {
             .then((response) => response.json())
             .then((responseText) => {
                 _.forEach(responseText.items, function(value, key) {
-
-
-
+// id.videoId
                     _this.output.push(
-                        <TouchableHighlight style={videoStyles.videoCard} key={key}>
+                        <TouchableHighlight
+                            style={videoStyles.videoCard} 
+                            key={key}
+                            onPress={_this.showVideoScreen.bind(_this, value.id.videoId)}>
                             <View>
                                 <Image
                                     style={videoStyles.thumbnail}
@@ -59,22 +61,20 @@ class AboutExercise extends Component {
                     );
                 });
 
-
                 _this.setState({
                     loaded: true
                 });
-
-                // responseText.items
-
-                // id.videoId
-                // snippet.title
-                // thumbnails.medium.url (320x180)
-                // snippet.channelTitle
-
             })
             .catch((error) => {
                 console.warn(error);
             });
+    }
+
+    showVideoScreen(videoId) {
+        this.props.navigator.push({
+            id: 'VideoScreen',
+            videoId: videoId
+        });
     }
 
     render() {
@@ -114,13 +114,5 @@ class AboutExercise extends Component {
         }
     }
 }
-
-// <WebView
-//     style={styles.video}
-//     source={{
-//                             uri: 'https://www.youtube.com/results?search_query=тренировка+' + this.props.exerciseName
-//                         }}
-//     javaScriptEnabled={true}
-// />
 
 module.exports = AboutExercise;

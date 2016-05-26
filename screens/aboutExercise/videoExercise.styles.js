@@ -4,7 +4,7 @@ const CARD_WIDTH = Dimensions.get('window').width - 16;
 
 export var styles = {
     wrapper: {
-        paddingTop: 20,
+        paddingTop: 10,
         backgroundColor: '#E8E8E8'
     },
     floater: {

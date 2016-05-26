@@ -1,9 +1,6 @@
-/**
- * easyGym React Native App
- * https://github.com/facebook/react-native
- */
+import React from 'react';
 
-import React, {
+import {
     AppRegistry,
     Component,
     Navigator,
@@ -15,6 +12,7 @@ import Exercises from './screens/exercises/Exercises.js';
 import SingleExercise from './screens/singleExercise/SingleExercise.js';
 import Statistics from './screens/statistics/Statistics.js';
 import AboutExercise from './screens/aboutExercise/AboutExercise.js';
+import VideoScreen from './screens/videoScreen/VideoScreen.js';
 
 var _navigator;
 
@@ -41,6 +39,7 @@ class EasyGym extends Component{
         switch (route.id) {
             case 'Statistics':
             case 'AboutExercise':
+            case 'VideoScreen':
                 return Navigator.SceneConfigs.FloatFromBottom;
             default:
                 return Navigator.SceneConfigs.HorizontalSwipeJump;
@@ -76,6 +75,11 @@ class EasyGym extends Component{
                     exerciseID={route.exerciseID}
                     exerciseName={route.exerciseName}
                     muscleKey={route.muscleKey}
+                />);
+            case 'VideoScreen':
+                return (<VideoScreen
+                    navigator={navigator}
+                    videoId={route.videoId}
                 />);
         }
     }

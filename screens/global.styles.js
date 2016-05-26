@@ -1,3 +1,5 @@
+import Dimensions from 'Dimensions';
+
 export var styles = {
     toolbar: {
         backgroundColor: '#0091EA',
@@ -41,5 +43,13 @@ export var styles = {
         fontWeight: 'bold',
         color: 'black',
         marginBottom: 10
+    },
+    video: {
+        backgroundColor: '#FFAAAA',
+        width: Dimensions.get('window').height,
+        height: Dimensions.get('window').height - 50,
+        transform: [{
+            rotate: '90deg'
+        }]
     }
 };
