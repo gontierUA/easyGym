@@ -17,9 +17,7 @@ var _ = require('lodash');
 const styles = StyleSheet.create(require('../global.styles').styles);
 const stylesTemp = StyleSheet.create(require('./exercises.styles').styles);
 
-var Datastore = require('react-native-local-mongodb');
-var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
-var DB_EXERCISES = new Datastore({ filename: 'DB_EXERCISES', autoload: true });
+var DB = require('../db').DB;
 
 class Exercises extends Component {
     constructor(props) {
@@ -47,7 +45,7 @@ class Exercises extends Component {
     loadExercises() {
         var _this = this;
 
-        DB_EXERCISES.find({type: _this.props.muscleKey}, function (error, items) {
+        DB.TABLE_EXERCISES.find({type: _this.props.muscleKey}, function (error, items) {
             _.forEach(items, function(value, key) {
                 _this.output.push(
                     <TouchableNativeFeedback key={key} onPress={_this.showSingleExercise.bind(_this, value._id, value.title)}>
@@ -66,7 +64,7 @@ class Exercises extends Component {
 
     addExercise() {
         if (this.state.newExercise) {
-            DB_EXERCISES.insert({
+            DB.TABLE_EXERCISES.insert({
                 type: this.props.muscleKey,
                 title: this.state.newExercise
             });

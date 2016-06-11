@@ -14,10 +14,7 @@ var _ = require('lodash');
 const styles = StyleSheet.create(require('../global.styles').styles);
 const muscleGroups = require('./db/db_muscles').Muscles;
 
-var Datastore = require('react-native-local-mongodb');
-var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
-var DB_EXERCISES = new Datastore({ filename: 'DB_EXERCISES', autoload: true });
-var DB_RESULTS = new Datastore({ filename: 'DB_RESULTS', autoload: true });
+var DB = require('../db').DB;
 
 const DEFAULT_EXERCISES = [
     {
@@ -215,23 +212,23 @@ class Muscles extends Component {
             isModalVisible: false
         };
 
-       // DB_INFO.remove({}, { multi: true });
-       // DB_EXERCISES.remove({}, { multi: true });
+       // TABLE_INFO.remove({}, { multi: true });
+       // TABLE_EXERCISES.remove({}, { multi: true });
         
         this.firstLoadActions();
     }
 
     firstLoadActions() {
-        DB_INFO.find({'states.isLoaded': true}, function (error, result) {
+        DB.TABLE_INFO.find({'states.isLoaded': true}, function (error, result) {
             if (!result.length) {
-                DB_INFO.insert({
+                DB.TABLE_INFO.insert({
                     states: {
                         isLoaded: true
                     }
                 });
                 
                 _.forEach(DEFAULT_EXERCISES, function(value, key) {
-                    DB_EXERCISES.insert(value);
+                    DB.TABLE_EXERCISES.insert(value);
                 });
             }
         });

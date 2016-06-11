@@ -16,10 +16,7 @@ import {
 const styles = StyleSheet.create(require('../global.styles').styles);
 const exerciseStyles = StyleSheet.create(require('./singleExercise.styles').styles);
 
-var Datastore = require('react-native-local-mongodb');
-var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
-var DB_EXERCISES = new Datastore({ filename: 'DB_EXERCISES', autoload: true });
-var DB_RESULTS = new Datastore({ filename: 'DB_RESULTS', autoload: true });
+var DB = require('../db').DB;
 
 class SingleExercise extends Component {
     constructor(props) {
@@ -48,9 +45,9 @@ class SingleExercise extends Component {
             last_reps_5: '0'
         };
 
-        // DB_RESULTS.remove({}, { multi: true });
+        // TABLE_RESULTS.remove({}, { multi: true });
 
-        // DB_RESULTS.find({}, function (error, items) {
+        // TABLE_RESULTS.find({}, function (error, items) {
         //     console.log('all results', items);
         // });
 
@@ -80,11 +77,11 @@ class SingleExercise extends Component {
     saveResults() {
         var _this = this;
 
-        DB_RESULTS.find({exerciseID: _this.props.exerciseID, date: _this.getCurrentDate()}, function (error, result) {
+        DB.TABLE_RESULTS.find({exerciseID: _this.props.exerciseID, date: _this.getCurrentDate()}, function (error, result) {
             console.log(result);
 
             if (!result.length) {
-                DB_RESULTS.insert({
+                DB.TABLE_RESULTS.insert({
                     exerciseID: _this.props.exerciseID,
                     date: _this.getCurrentDate(),
                     results: [
@@ -98,7 +95,7 @@ class SingleExercise extends Component {
 
                 ToastAndroid.show('Данные добавлены!', ToastAndroid.SHORT);
             } else {
-                DB_RESULTS.update({ _id: result[0]._id }, {
+                DB.TABLE_RESULTS.update({ _id: result[0]._id }, {
                     $set: {
                         results: [
                             [_this.state.today_weight_1, _this.state.today_reps_1],
@@ -118,7 +115,7 @@ class SingleExercise extends Component {
     getTodayResults() {
         var _this = this;
 
-        DB_RESULTS.find({exerciseID: _this.props.exerciseID, date: _this.getCurrentDate()}, function (error, items) {
+        DB.TABLE_RESULTS.find({exerciseID: _this.props.exerciseID, date: _this.getCurrentDate()}, function (error, items) {
             if (items.length) {
                 _this.setState({
                     today_weight_1: items[0].results[0][0],
@@ -139,7 +136,7 @@ class SingleExercise extends Component {
     getLastResult() {
         var _this = this;
 
-        DB_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
+        DB.TABLE_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
             if (items.length) {
                 _this.setState({
                     last_weight_1: items[0].results[0][0],

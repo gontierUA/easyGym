@@ -15,10 +15,7 @@ var _ = require('lodash');
 const styles = StyleSheet.create(require('../global.styles').styles);
 const statisticsStyles = StyleSheet.create(require('./statistics.styles').styles);
 
-var Datastore = require('react-native-local-mongodb');
-var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
-var DB_EXERCISES = new Datastore({ filename: 'DB_EXERCISES', autoload: true });
-var DB_RESULTS = new Datastore({ filename: 'DB_RESULTS', autoload: true });
+var DB = require('../db').DB;
 
 class Statistics extends Component {
     constructor(props) {
@@ -35,12 +32,14 @@ class Statistics extends Component {
         var _this = this;
         var i = 1;
 
-        DB_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
+        DB.TABLE_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
             if (items.length) {
                 _.forEach(items, function(value, key) {
                     _this.output.push(
                         <View key={i} style={statisticsStyles.holder}>
-                            <Text style={statisticsStyles.date}>{value.date.substring(6, 8)}/{value.date.substring(4, 6)}/{value.date.substring(0, 4)} </Text>
+                            <Text style={statisticsStyles.date}>
+                                {value.date.substring(6, 8)}/{value.date.substring(4, 6)}/{value.date.substring(0, 4)} 
+                            </Text>
                             <Text style={statisticsStyles.text}> {value.results[0][0]}x{value.results[0][1]}</Text>
                             <Text style={statisticsStyles.text}> {value.results[1][0]}x{value.results[1][1]}</Text>
                             <Text style={statisticsStyles.text}> {value.results[2][0]}x{value.results[2][1]}</Text>
