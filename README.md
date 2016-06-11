@@ -6,7 +6,7 @@ React-Native workout application for android.
 - Material Design patterns
 - Modals, Buttons, Toolbars, TextInputs
 - Youtube API
+- Mongodb
 
 ##Installation
 Once you have downloaded or cloned this repository, run `npm install` inside the directory.
-

@@ -8,7 +8,6 @@ import {
     ToolbarAndroid,
     TouchableNativeFeedback,
     ScrollView,
-    TouchableHighlight,
     Modal,
     TextInput
 } from 'react-native';
@@ -16,6 +15,7 @@ import {
 var _ = require('lodash');
 
 const styles = StyleSheet.create(require('../global.styles').styles);
+const stylesTemp = StyleSheet.create(require('./exercises.styles').styles);
 
 var Datastore = require('react-native-local-mongodb');
 var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
@@ -27,6 +27,7 @@ class Exercises extends Component {
 
         this.state = {
             loaded: false,
+            newExercise: '',
             isModalVisible: false
         };
 
@@ -48,8 +49,6 @@ class Exercises extends Component {
 
         DB_EXERCISES.find({type: _this.props.muscleKey}, function (error, items) {
             _.forEach(items, function(value, key) {
-                // console.log(value, key);
-
                 _this.output.push(
                     <TouchableNativeFeedback key={key} onPress={_this.showSingleExercise.bind(_this, value._id, value.title)}>
                         <View style={styles.card}>
@@ -66,13 +65,23 @@ class Exercises extends Component {
     }
 
     addExercise() {
-        // todo: need to refresh and save
-        // DB_EXERCISES.insert({
-        //     type: 'chest',
-        //     title: 'TEST'
-        // });
+        if (this.state.newExercise) {
+            DB_EXERCISES.insert({
+                type: this.props.muscleKey,
+                title: this.state.newExercise
+            });
 
-        this.setState({isModalVisible: true});
+            this._setModalVisibility(false);
+
+            this.output = [];
+
+            this.setState({
+                loaded: false,
+                newExercise: ''
+            });
+
+            this.render();
+        }
     }
 
     _setModalVisibility(visibility) {
@@ -87,25 +96,33 @@ class Exercises extends Component {
                         visible={this.state.isModalVisible}
                         animationType="fade"
                         transparent={true}
-                        onRequestClose={() => {this._setModalVisibility(false)}}
+                        onRequestClose={() => {this._setModalVisibility.bind(this, false)}}
                     >
                         <View style={stylesTemp.modalBg}>
                             <View style={stylesTemp.modal}>
                                 <Text style={stylesTemp.modalTitle}>Добавить новое упражнение?</Text>
-                                <TextInput placeholder="Название" />
+                                <TextInput
+                                    placeholder="Название"
+                                    underlineColorAndroid={(this.state.newExercise) ? '#00C853' : '#D50000'}
+                                    onChangeText={(val) => this.setState({newExercise: val})}
+                                />
 
                                 <View style={stylesTemp.buttonsHolder}>
-                                    <TouchableHighlight
+                                    <TouchableNativeFeedback
                                         onPress={this._setModalVisibility.bind(this, false)}
                                         style={stylesTemp.modalButton}>
-                                        <Text style={stylesTemp.modalButtonText}>ОТМЕНИТЬ</Text>
-                                    </TouchableHighlight>
+                                        <View>
+                                            <Text style={stylesTemp.modalButtonText}>ОТМЕНИТЬ</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
 
-                                    <TouchableHighlight
-                                        onPress={this._setModalVisibility.bind(this, false)}
+                                    <TouchableNativeFeedback
+                                        onPress={this.addExercise.bind(this)}
                                         style={stylesTemp.modalButton}>
-                                        <Text style={stylesTemp.modalButtonText}>ДОБАВИТЬ</Text>
-                                    </TouchableHighlight>
+                                        <View>
+                                            <Text style={stylesTemp.modalButtonText}>ДОБАВИТЬ</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
                                 </View>
                             </View>
                         </View>
@@ -117,11 +134,12 @@ class Exercises extends Component {
                         <View>{this.output}</View>
                     </ScrollView>
 
-                    <TouchableHighlight
-                        style={stylesTemp.addButton}
-                        onPress={this.addExercise.bind(this)}>
-                        <Text style={stylesTemp.addButtonText}>+</Text>
-                    </TouchableHighlight>
+                    <TouchableNativeFeedback
+                        onPress={this._setModalVisibility.bind(this, true)}>
+                        <View style={stylesTemp.addButton}>
+                            <Text style={stylesTemp.addButtonText}>+</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                 </View>
             );
         } else {
@@ -131,62 +149,5 @@ class Exercises extends Component {
         }
     }
 }
-
-var stylesTemp = StyleSheet.create({
-    addButton: {
-        width: 56,
-        height: 56,
-        backgroundColor: '#E91E63',
-        borderRadius: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 8,
-        position: 'absolute',
-        bottom: 20,
-        right: 20
-    },
-    addButtonText: {
-        fontSize: 31,
-        fontWeight: '100',
-        lineHeight: 43,
-        color: '#FFF'
-    },
-    modalBg: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.75)'
-    },
-    modal: {
-        height: 220,
-        padding: 24,
-        backgroundColor: '#FFF',
-        elevation: 5,
-        borderRadius: 2,
-        marginHorizontal: 40
-    },
-    modalTitle: {
-        fontSize: 21,
-        color: '#000',
-        fontWeight: 'bold',
-        marginBottom: 10
-    },
-    buttonsHolder: {
-        position: 'absolute',
-        bottom: 8,
-        right: 8,
-        flexDirection: 'row'
-    },
-    modalButton: {
-        marginLeft: 8
-    },
-    modalButtonText: {
-        color: '#0091EA',
-        height: 36,
-        padding: 8,
-        textAlign: 'center',
-        textAlignVertical: 'center'
-    }
-});
 
 module.exports = Exercises;
