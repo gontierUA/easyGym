@@ -2,32 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/EasyGym/realm/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-a4743e942cc5ada72baeb184aede41c6062f0233.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.3/1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14/jackson-core-2.2.3.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/jackson-core-2.2.3-067f93e4541ed547a20350b481b0a4f276fbae4a.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.8.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="845a5b3a624946b2068963ba656c117fc453701c">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-e6f50d2cc0d11627803c198362f160413af96cdb.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ed1c5bed21041f36b3eabf8afddca80e5d1c49b0">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-f047199964d533523ef0a0e0d1552966b5e93318.jar" />
+        sha1="2c12029f887b00aa239cfcc7da283ff53cde56d8">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-af5cd3225050f6aa27a4b59c331e13b9b28374c0.jar" />
     </item>
     <item
         jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
@@ -37,13 +16,6 @@
         <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-3aa2e5e776c19032031cf6b80da28a85c41d7ba2.jar" />
     </item>
     <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/jsr305-3.0.0-7bf620d26489431defe886a6d239d4ac16ec9002.jar" />
-    </item>
-    <item
         jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -51,67 +23,25 @@
         <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-e9f06aa34812cc9e3a9d88fcdcdd0a9014691540.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/EasyGym/realm/unspecified/jars/classes.jar"
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-ws/3.2.0/1ea229d6984444c8c58b8e97ba4c8429d9d135b3/okhttp-ws-3.2.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="2c12029f887b00aa239cfcc7da283ff53cde56d8">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-af5cd3225050f6aa27a4b59c331e13b9b28374c0.jar" />
+        sha1="1ea229d6984444c8c58b8e97ba4c8429d9d135b3">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-3.2.0-d6a7a01f611fb4f004d95b9c404bf81413cbae67.jar" />
     </item>
     <item
-        jar="/usr/local/opt/android-sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.8.0/5ea7af56cc7c567ed9856d99efb30740e9b17ff/okio-1.8.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-83cbd8867bbfafb64844edcdc4bcc0a8099d3359.jar" />
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okio-1.8.0-d7774f98cb15718fb54be59aa680d22fb79cbc2b.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.8.1/jars/classes.jar"
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="3836ecca4e31e18ea8fbae8e822d49777b0db4f7">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-8c88ca0cf9c7630593f3f5a74c53ed50db2f8442.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-1d442cbee01ce3cfc18e3f573f7dc1e9a70448a0.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okhttp-2.5.0-07dd697f0504258152e6d854dbdc3e7c185f0347.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-ws/2.5.0/e9753b7dcae5deca92e871c5c759067070b07bc/okhttp-ws-2.5.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="0e9753b7dcae5deca92e871c5c759067070b07bc">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-2.5.0-707687504f920dd82fbee3f5d95fc9af80be56e1.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/org.nanohttpd/nanohttpd/2.2.0/73a02117620b6cc7683a1ed6ae24c2f36e2a715/nanohttpd-2.2.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="073a02117620b6cc7683a1ed6ae24c2f36e2a715">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/nanohttpd-2.2.0-db3b8ee91dabf3ff70597d37b85d24f81dba3bba.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.8.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="9178570a3a28c95fabd3bc746cd68efe99ad2b47">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-0ed09f74a7db14276263a3e90ec50b3d4b7b621b.jar" />
-    </item>
-    <item
-        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okio-1.6.0-a4dfb586dffae81928accb4510c46cb1becbb579.jar" />
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1-1cf0786dc533706b2bb34dc81161c55d4dc25aac.jar" />
     </item>
     <item
         jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
@@ -121,32 +51,116 @@
         <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-59a0277ffae954ba0751c60ddd3254bcda638525.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.26.2/jars/libs/infer-annotations-1.5.jar"
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.10.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="79f21e7305d968c2c492a1987ea3ced5ff65fdeb">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-47417f5433e2c9a1b61b30e4e8832dca314c2ca6.jar" />
+        sha1="65f0c887ee1f57cd0ea65b228e39b7f35372b798">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-8b14f9308920f5d950b808d9d99efe11c6cd62ad.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-3270f5542df3260113b2eaa41ae61d278d03f09d.jar" />
+        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/jsr305-3.0.0-7bf620d26489431defe886a6d239d4ac16ec9002.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.8.1/jars/classes.jar"
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.28.0-rc.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="4af24c040b21980e0a80a505816c648e36705bd9">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-a3deb4952613de86a73c36f7fa2d0cb36a4b36f9.jar" />
+        sha1="fe77dbc433f1a53546c8fd9ba23a888b4ecda6d7">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-7dd84f596258850e30ed8c95bb14f4a9362d3f08.jar" />
     </item>
     <item
-        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp/0.8.1/jars/classes.jar"
+        jar="/usr/local/opt/android-sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="0d5d69b03cb7d68b81543f6483ed04ccb0e2235b">
-        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-d94a1234d5bde755e2454a2284179d19e188e14f.jar" />
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1-a041f2f8ff1493800bffcf8f765c2b6816fd397f.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okhttp-3.2.0-d96923c4bbb2a92b629eae550e4ff0f8704d6564.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-1d442cbee01ce3cfc18e3f573f7dc1e9a70448a0.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.28.0-rc.0/jars/libs/infer-annotations-1.5.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b292e9eb814eda73d11fd93d9dd8111e2ada9f90">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-5037c509de85865bdeff0316b109995b749f1c1f.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-9169fbf8e03343c27adaf87305ad7297c8e2a75d.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp3/0.10.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="53880c6e24bb574c2f03fd0f743a268ccc502f45">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-0fc03599c82b327af5de4ef3a9f33e152004fcf4.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.10.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="857099e23430445aeb65cf703d5adf646ff280f1">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-7b51d74f6f8b4e6493ead0e0467d8849f0fe1b2e.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/org.nanohttpd/nanohttpd/2.2.0/73a02117620b6cc7683a1ed6ae24c2f36e2a715/nanohttpd-2.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="073a02117620b6cc7683a1ed6ae24c2f36e2a715">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/nanohttpd-2.2.0-db3b8ee91dabf3ff70597d37b85d24f81dba3bba.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.2.0/6f8a4b1435c9e0a6f9c5fe4a1be46627b848fd0c/okhttp-urlconnection-3.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6f8a4b1435c9e0a6f9c5fe4a1be46627b848fd0c">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.2.0-94925d8167bc1d9edecae0b029ea7724d03a7b61.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.10.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6e1ed00013584399dbe27d45ac1fd6a9828c9fca">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-18f4456a28869c505b71e3998ae653095ee793c0.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.3/1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14/jackson-core-2.2.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/jackson-core-2.2.3-067f93e4541ed547a20350b481b0a4f276fbae4a.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.10.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5e88a2a26ac71cd7f8fd8bd9f9381fa06d1a47a3">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-706f8aace819a7c35da47c75a48ff312ca3602b8.jar" />
+    </item>
+    <item
+        jar="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.10.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d323cf4983bdfce7136a1ce5e32710e1b36b20fe">
+        <dex dex="/Users/nikita/Projects/EasyGym/android/app/build/intermediates/pre-dexed/debug/classes-1b75465bc8c2620e570e0ef42f70bb1c31ef757f.jar" />
     </item>
 
 </items>

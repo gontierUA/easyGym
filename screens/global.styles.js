@@ -33,10 +33,19 @@ export var styles = {
         color: '#777'
     },
     button: {
-        width: 140,
-        padding: 15,
-        elevation: 3,
-        margin: 5
+        elevation: 2,
+        margin: 5,
+        height: 36,
+        paddingLeft: 16,
+        paddingRight: 16,
+        borderRadius: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: '#FFF',
+        fontSize: 14
     },
     screenTitle: {
         fontSize: 21,

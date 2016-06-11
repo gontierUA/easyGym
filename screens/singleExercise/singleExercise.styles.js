@@ -28,8 +28,7 @@ export var styles = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        marginTop: 40,
-        marginBottom: 40
+        paddingBottom: 100
     },
     buttonPlusMinus: {
         padding: 15,
@@ -46,10 +45,12 @@ export var styles = {
         backgroundColor: '#00C853'
     },
     buttonSave: {
-        backgroundColor: '#00C853'
+        backgroundColor: '#00C853',
+        position: 'absolute',
+        right: 10,
+        bottom: 5
     },
     buttonText: {
-        textAlign: 'center',
         color: '#FFF'
     },
     header: {

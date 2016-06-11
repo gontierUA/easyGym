@@ -15,83 +15,71 @@ var _ = require('lodash');
 const styles = StyleSheet.create(require('../global.styles').styles);
 const statisticsStyles = StyleSheet.create(require('./statistics.styles').styles);
 
-const Realm = require('realm');
-var realm;
+var Datastore = require('react-native-local-mongodb');
+var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
+var DB_EXERCISES = new Datastore({ filename: 'DB_EXERCISES', autoload: true });
+var DB_RESULTS = new Datastore({ filename: 'DB_RESULTS', autoload: true });
 
 class Statistics extends Component {
     constructor(props) {
         super(props);
 
-        const ExerciseResults = {
-            name: 'ExerciseResults',
-            properties: {
-                weight_1: {type: 'string', default: '0'},
-                weight_2: {type: 'string', default: '0'},
-                weight_3: {type: 'string', default: '0'},
-                weight_4: {type: 'string', default: '0'},
-                weight_5: {type: 'string', default: '0'},
-                reps_1: {type: 'string', default: '0'},
-                reps_2: {type: 'string', default: '0'},
-                reps_3: {type: 'string', default: '0'},
-                reps_4: {type: 'string', default: '0'},
-                reps_5: {type: 'string', default: '0'}
-            }
+        this.state = {
+            loaded: false
         };
 
-        const TotalResults = {
-            name: 'TotalResults',
-            properties: {
-                id: 'string', // workout date
-                muscleKey: 'string',
-                exerciseID: 'int',
-                results: 'ExerciseResults'
-            }
-        };
-
-        realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 6});
+        this.output = [];
     }
 
     showStatistics() {
-        var statisticsCard = [];
+        var _this = this;
         var i = 1;
 
-        var results = realm.objects('TotalResults').filtered(
-            'muscleKey="' + this.props.muscleKey + '"' +
-            'AND exerciseID="' + this.props.exerciseID + '"');
+        DB_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
+            if (items.length) {
+                _.forEach(items, function(value, key) {
+                    _this.output.push(
+                        <View key={i} style={statisticsStyles.holder}>
+                            <Text style={statisticsStyles.date}>{value.date.substring(6, 8)}/{value.date.substring(4, 6)}/{value.date.substring(0, 4)} </Text>
+                            <Text style={statisticsStyles.text}> {value.results[0][0]}x{value.results[0][1]}</Text>
+                            <Text style={statisticsStyles.text}> {value.results[1][0]}x{value.results[1][1]}</Text>
+                            <Text style={statisticsStyles.text}> {value.results[2][0]}x{value.results[2][1]}</Text>
+                            <Text style={statisticsStyles.text}> {value.results[3][0]}x{value.results[3][1]}</Text>
+                            <Text style={statisticsStyles.text}> {value.results[4][0]}x{value.results[4][1]}</Text>
+                        </View>
+                    );
 
-        _.forEachRight(results, function(value, key) {
-            statisticsCard.push(
-                <View key={i} style={statisticsStyles.holder}>
-                    <Text style={statisticsStyles.date}>{value.id.substring(6, 8)}/{value.id.substring(4, 6)}/{value.id.substring(0, 4)} </Text>
-                    <Text style={statisticsStyles.text}> {value.results.weight_1}x{value.results.reps_1}</Text>
-                    <Text style={statisticsStyles.text}> {value.results.weight_2}x{value.results.reps_2}</Text>
-                    <Text style={statisticsStyles.text}> {value.results.weight_3}x{value.results.reps_3}</Text>
-                    <Text style={statisticsStyles.text}> {value.results.weight_4}x{value.results.reps_4}</Text>
-                    <Text style={statisticsStyles.text}> {value.results.weight_5}x{value.results.reps_5}</Text>
-                </View>
-            );
+                    i++;
+                });
 
-            i++;
+                _this.setState({
+                    loaded: true
+                });
+            }
         });
-
-        return (statisticsCard);
     }
 
     render() {
-        return (
-            <View style={{flex: 1}}>
-                <ToolbarAndroid
-                    title={"Cтатистика"}
-                    subtitle={this.props.exerciseName}
-                    titleColor="#FFF"
-                    subtitleColor="#FFF"
-                    style={styles.toolbar} />
+        if (this.state.loaded) {
+            return (
+                <View style={{flex: 1}}>
+                    <ToolbarAndroid
+                        title={"Cтатистика"}
+                        subtitle={this.props.exerciseName}
+                        titleColor="#FFF"
+                        subtitleColor="#FFF"
+                        style={styles.toolbar} />
 
-                <ScrollView style={statisticsStyles.container}>
-                    {this.showStatistics()}
-                </ScrollView>
-            </View>
-        );
+                    <ScrollView style={statisticsStyles.container}>
+                        {this.output}
+                    </ScrollView>
+                </View>
+            );
+        } else {
+            return (
+                <View style={{flex: 1}}>{this.showStatistics()}</View>
+            );
+        }
     }
 }
 

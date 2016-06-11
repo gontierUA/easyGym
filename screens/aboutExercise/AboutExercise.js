@@ -8,12 +8,12 @@ import {
     ToolbarAndroid,
     TouchableHighlight,
     ScrollView,
-    Image
+    Image,
+    ActivityIndicator,
+    Linking
 } from 'react-native';
 
 var _ = require('lodash');
-
-var ProgressBar = require('ProgressBarAndroid');
 
 const styles = StyleSheet.create(require('../global.styles').styles);
 const videoStyles = StyleSheet.create(require('./videoExercise.styles').styles);
@@ -72,10 +72,7 @@ class AboutExercise extends Component {
     }
 
     showVideoScreen(videoId) {
-        this.props.navigator.push({
-            id: 'VideoScreen',
-            videoId: videoId
-        });
+        Linking.openURL('https://www.youtube.com/watch?v=' + videoId).catch(err => console.error('An error occurred', err));
     }
 
     render() {
@@ -108,7 +105,7 @@ class AboutExercise extends Component {
                         style={styles.toolbar} />
 
                     <ScrollView justifyContent="center" style={videoStyles.wrapper}>
-                        <ProgressBar styleAttr="Normal" />
+                        <ActivityIndicator />
                     </ScrollView>
                 </View>
             );

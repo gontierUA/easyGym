@@ -13,66 +13,56 @@ import {
     WebView
 } from 'react-native';
 
-var _ = require('lodash');
-
 const styles = StyleSheet.create(require('../global.styles').styles);
 const exerciseStyles = StyleSheet.create(require('./singleExercise.styles').styles);
 
-const Realm = require('realm');
-var realm;
+var Datastore = require('react-native-local-mongodb');
+var DB_INFO = new Datastore({ filename: 'DB_INFO', autoload: true });
+var DB_EXERCISES = new Datastore({ filename: 'DB_EXERCISES', autoload: true });
+var DB_RESULTS = new Datastore({ filename: 'DB_RESULTS', autoload: true });
 
 class SingleExercise extends Component {
     constructor(props) {
         super(props);
 
-        const ExerciseResults = {
-            name: 'ExerciseResults',
-            properties: {
-                weight_1: {type: 'string', default: '0'},
-                weight_2: {type: 'string', default: '0'},
-                weight_3: {type: 'string', default: '0'},
-                weight_4: {type: 'string', default: '0'},
-                weight_5: {type: 'string', default: '0'},
-                reps_1: {type: 'string', default: '0'},
-                reps_2: {type: 'string', default: '0'},
-                reps_3: {type: 'string', default: '0'},
-                reps_4: {type: 'string', default: '0'},
-                reps_5: {type: 'string', default: '0'}
-            }
-        };
-
-        const TotalResults = {
-            name: 'TotalResults',
-            properties: {
-                id: 'string', // workout date
-                muscleKey: 'string',
-                exerciseID: 'int',
-                results: 'ExerciseResults'
-            }
-        };
-
-        realm = new Realm({schema: [ExerciseResults, TotalResults], schemaVersion: 6});
-
         this.state = {
-            weight_1: this.getTodayResults()['weight_1'],
-            weight_2: this.getTodayResults()['weight_2'],
-            weight_3: this.getTodayResults()['weight_3'],
-            weight_4: this.getTodayResults()['weight_4'],
-            weight_5: this.getTodayResults()['weight_5'],
-            reps_1: this.getTodayResults()['reps_1'],
-            reps_2: this.getTodayResults()['reps_2'],
-            reps_3: this.getTodayResults()['reps_3'],
-            reps_4: this.getTodayResults()['reps_4'],
-            reps_5: this.getTodayResults()['reps_5'],
-            btnPressed: false
+            today_weight_1: '0',
+            today_weight_2: '0',
+            today_weight_3: '0',
+            today_weight_4: '0',
+            today_weight_5: '0',
+            today_reps_1: '0',
+            today_reps_2: '0',
+            today_reps_3: '0',
+            today_reps_4: '0',
+            today_reps_5: '0',
+            last_weight_1: '0',
+            last_weight_2: '0',
+            last_weight_3: '0',
+            last_weight_4: '0',
+            last_weight_5: '0',
+            last_reps_1: '0',
+            last_reps_2: '0',
+            last_reps_3: '0',
+            last_reps_4: '0',
+            last_reps_5: '0'
         };
+
+        // DB_RESULTS.remove({}, { multi: true });
+
+        // DB_RESULTS.find({}, function (error, items) {
+        //     console.log('all results', items);
+        // });
+
+        this.getTodayResults();
+        this.getLastResult();
     }
 
     getCurrentDate() {
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
-        var yyyy = today.getFullYear();
+        const YEAR = today.getFullYear();
 
         if (dd < 10) {
             dd = '0' + dd;
@@ -82,7 +72,7 @@ class SingleExercise extends Component {
             mm = '0' + mm;
         }
 
-        today = yyyy + mm + dd;
+        today = YEAR + mm + dd;
 
         return today;
     }
@@ -90,108 +80,81 @@ class SingleExercise extends Component {
     saveResults() {
         var _this = this;
 
-        var todayResults = realm.objects('TotalResults').filtered(
-            'id = "' + this.getCurrentDate() + '" ' +
-            'AND muscleKey="' + _this.props.muscleKey + '"' +
-            'AND exerciseID="' + _this.props.exerciseID + '"');
+        DB_RESULTS.find({exerciseID: _this.props.exerciseID, date: _this.getCurrentDate()}, function (error, result) {
+            console.log(result);
 
-        realm.write(() => {
-            if (todayResults.length) { // update existing
-                todayResults[0].results = {
-                    weight_1: _this.state.weight_1,
-                    weight_2: _this.state.weight_2,
-                    weight_3: _this.state.weight_3,
-                    weight_4: _this.state.weight_4,
-                    weight_5: _this.state.weight_5,
-                    reps_1: _this.state.reps_1,
-                    reps_2: _this.state.reps_2,
-                    reps_3: _this.state.reps_3,
-                    reps_4: _this.state.reps_4,
-                    reps_5: _this.state.reps_5
-                };
-
-                ToastAndroid.show('Данные о тренировке обновлены!', ToastAndroid.SHORT);
-            } else { // create new
-                realm.create('TotalResults', {
-                    id: _this.getCurrentDate(),
-                    muscleKey: _this.props.muscleKey,
+            if (!result.length) {
+                DB_RESULTS.insert({
                     exerciseID: _this.props.exerciseID,
-                    results: {
-                        weight_1: _this.state.weight_1,
-                        weight_2: _this.state.weight_2,
-                        weight_3: _this.state.weight_3,
-                        weight_4: _this.state.weight_4,
-                        weight_5: _this.state.weight_5,
-                        reps_1: _this.state.reps_1,
-                        reps_2: _this.state.reps_2,
-                        reps_3: _this.state.reps_3,
-                        reps_4: _this.state.reps_4,
-                        reps_5: _this.state.reps_5
-                    }
+                    date: _this.getCurrentDate(),
+                    results: [
+                        [_this.state.today_weight_1, _this.state.today_reps_1],
+                        [_this.state.today_weight_2, _this.state.today_reps_2],
+                        [_this.state.today_weight_3, _this.state.today_reps_3],
+                        [_this.state.today_weight_4, _this.state.today_reps_4],
+                        [_this.state.today_weight_5, _this.state.today_reps_5]
+                    ]
                 });
 
-                ToastAndroid.show('Данные о тренировке добавлены!', ToastAndroid.SHORT);
+                ToastAndroid.show('Данные добавлены!', ToastAndroid.SHORT);
+            } else {
+                DB_RESULTS.update({ _id: result[0]._id }, {
+                    $set: {
+                        results: [
+                            [_this.state.today_weight_1, _this.state.today_reps_1],
+                            [_this.state.today_weight_2, _this.state.today_reps_2],
+                            [_this.state.today_weight_3, _this.state.today_reps_3],
+                            [_this.state.today_weight_4, _this.state.today_reps_4],
+                            [_this.state.today_weight_5, _this.state.today_reps_5]
+                        ]
+                    }
+                }, {});
+
+                ToastAndroid.show('Данные обновлены!', ToastAndroid.SHORT);
             }
         });
-
-        // delete all results
-
-        // realm.write(() => {
-        //     var deleteResults = realm.objects('TotalResults').filtered(
-        //         'id="20140409" ' +
-        //         'AND muscleKey="' + this.props.muscleKey + '"' +
-        //         'AND exerciseID="' + this.props.exerciseID + '"');
-        //
-        //     realm.delete(deleteResults);
-        // });
     }
 
     getTodayResults() {
-        var todayResults = realm.objects('TotalResults').filtered(
-            'id = "' + this.getCurrentDate() + '" ' +
-            'AND muscleKey="' + this.props.muscleKey + '"' +
-            'AND exerciseID="' + this.props.exerciseID + '"');
+        var _this = this;
 
-        if (todayResults.length) {
-            return todayResults[0].results;
-        } else {
-            return {
-                weight_1: '0',
-                weight_2: '0',
-                weight_3: '0',
-                weight_4: '0',
-                weight_5: '0',
-                reps_1: '0',
-                reps_2: '0',
-                reps_3: '0',
-                reps_4: '0',
-                reps_5: '0'
+        DB_RESULTS.find({exerciseID: _this.props.exerciseID, date: _this.getCurrentDate()}, function (error, items) {
+            if (items.length) {
+                _this.setState({
+                    today_weight_1: items[0].results[0][0],
+                    today_weight_2: items[0].results[1][0],
+                    today_weight_3: items[0].results[2][0],
+                    today_weight_4: items[0].results[3][0],
+                    today_weight_5: items[0].results[4][0],
+                    today_reps_1: items[0].results[0][1],
+                    today_reps_2: items[0].results[1][1],
+                    today_reps_3: items[0].results[2][1],
+                    today_reps_4: items[0].results[3][1],
+                    today_reps_5: items[0].results[4][1]
+                });
             }
-        }
+        });
     }
 
     getLastResult() {
-        var results = realm.objects('TotalResults').filtered(
-            'muscleKey="' + this.props.muscleKey + '"' +
-            'AND exerciseID="' + this.props.exerciseID + '"' +
-            'AND id!="' + this.getCurrentDate() + '"');
+        var _this = this;
 
-        if (results.length) {
-            return results[results.length - 1].results;
-        } else {
-            return {
-                weight_1: '0',
-                weight_2: '0',
-                weight_3: '0',
-                weight_4: '0',
-                weight_5: '0',
-                reps_1: '0',
-                reps_2: '0',
-                reps_3: '0',
-                reps_4: '0',
-                reps_5: '0'
+        DB_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
+            if (items.length) {
+                _this.setState({
+                    last_weight_1: items[0].results[0][0],
+                    last_weight_2: items[0].results[1][0],
+                    last_weight_3: items[0].results[2][0],
+                    last_weight_4: items[0].results[3][0],
+                    last_weight_5: items[0].results[4][0],
+                    last_reps_1: items[0].results[0][1],
+                    last_reps_2: items[0].results[1][1],
+                    last_reps_3: items[0].results[2][1],
+                    last_reps_4: items[0].results[3][1],
+                    last_reps_5: items[0].results[4][1]
+                });
             }
-        }
+        });
     }
 
     _changeValue(input, step, type) {
@@ -209,24 +172,26 @@ class SingleExercise extends Component {
                 <View key={i} style={exerciseStyles.resultsHolder}>
                     <TouchableHighlight
                         style={[exerciseStyles.buttonPlusMinus, exerciseStyles.buttonMinus]}
-                        onPress={this._changeValue.bind(this, 'weight_' + i, 5, '-')}
+                        onPress={this._changeValue.bind(this, 'today_weight_' + i, 5, '-')}
                         underlayColor="#FF8A65">
                         <Text style={exerciseStyles.buttonText}>&ndash;</Text>
                     </TouchableHighlight>
 
-                    <TextInput style={exerciseStyles.resultsInput}
-                               keyboardType="numeric"
-                               selectTextOnFocus={true}
-                               onChangeText={(val) => this.setState({['weight_' + i]: val})}
-                               placeholder={this.getLastResult()['weight_' + i]}
-                               defaultValue={(this.getTodayResults()['weight_' + i] != 0) ? this.getTodayResults()['weight_' + i] : ''}
-                               underlineColorAndroid={(this.getTodayResults()['weight_' + i] != 0) ? '#00C853' : '#546E7A'}
-                               onSubmitEditing={this.saveResults.bind(this)}
-                               value={(this.state['weight_' + i] === '0') ? '' : this.state['weight_' + i]}/>
+                    <TextInput
+                        style={exerciseStyles.resultsInput}
+                        keyboardType="numeric"
+                        selectTextOnFocus={true}
+                        onChangeText={(val) => this.setState({['today_weight_' + i]: val})}
+                        placeholder={this.state['last_weight_' + i]}
+                        defaultValue={(this.state['today_weight_' + i] !== '0') ? this.state['today_weight_' + i] : ''}
+                        underlineColorAndroid={(this.state['today_weight_' + i] !== '0') ? '#00C853' : '#546E7A'}
+                        onSubmitEditing={this.saveResults.bind(this)}
+                        value={(this.state['today_weight_' + i] !== '0') ? this.state['today_weight_' + i] : ''}
+                    />
 
                     <TouchableHighlight
                         style={[exerciseStyles.buttonPlusMinus, exerciseStyles.buttonPlus]}
-                        onPress={this._changeValue.bind(this, 'weight_' + i, 5, '+')}
+                        onPress={this._changeValue.bind(this, 'today_weight_' + i, 5, '+')}
                         underlayColor="#00E676">
                         <Text style={exerciseStyles.buttonText}>+</Text>
                     </TouchableHighlight>
@@ -235,24 +200,26 @@ class SingleExercise extends Component {
 
                     <TouchableHighlight
                         style={[exerciseStyles.buttonPlusMinus, exerciseStyles.buttonMinus]}
-                        onPress={this._changeValue.bind(this, 'reps_' + i, 1, '-')}
+                        onPress={this._changeValue.bind(this, 'today_reps_' + i, 1, '-')}
                         underlayColor="#FF8A65">
                         <Text style={exerciseStyles.buttonText}>&ndash;</Text>
                     </TouchableHighlight>
 
-                    <TextInput style={exerciseStyles.resultsInput}
-                               keyboardType="numeric"
-                               selectTextOnFocus={true}
-                               onChangeText={(val) => this.setState({['reps_' + i]: val})}
-                               placeholder={this.getLastResult()['reps_' + i]}
-                               defaultValue={(this.getTodayResults()['reps_' + i] != 0) ? this.getTodayResults()['reps_' + i] : ''}
-                               underlineColorAndroid={(this.getTodayResults()['reps_' + i] != 0) ? '#00C853' : '#546E7A'}
-                               onSubmitEditing={this.saveResults.bind(this)}
-                               value={(this.state['reps_' + i] === '0') ? '' : this.state['reps_' + i]} />
+                    <TextInput
+                        style={exerciseStyles.resultsInput}
+                        keyboardType="numeric"
+                        selectTextOnFocus={true}
+                        onChangeText={(val) => this.setState({['today_reps_' + i]: val})}
+                        placeholder={this.state['last_reps_' + i]}
+                        defaultValue={(this.state['today_reps_' + i] !== '0') ? this.state['today_reps_' + i] : ''}
+                        underlineColorAndroid={(this.state['today_reps_' + i] !== '0') ? '#00C853' : '#546E7A'}
+                        onSubmitEditing={this.saveResults.bind(this)}
+                        value={(this.state['today_reps_' + i] !== '0') ? this.state['today_reps_' + i] : ''}
+                    />
 
                     <TouchableHighlight
                         style={[exerciseStyles.buttonPlusMinus, exerciseStyles.buttonPlus]}
-                        onPress={this._changeValue.bind(this, 'reps_' + i, 1, '+')}
+                        onPress={this._changeValue.bind(this, 'today_reps_' + i, 1, '+')}
                         underlayColor="#00E676">
                         <Text style={exerciseStyles.buttonText}>+</Text>
                     </TouchableHighlight>
@@ -311,7 +278,7 @@ class SingleExercise extends Component {
                             onPress={this.saveResults.bind(this)}
                             style={[styles.button, exerciseStyles.buttonSave]}
                             underlayColor="#00E676">
-                            <Text style={exerciseStyles.buttonText}>СОХРАНИТЬ</Text>
+                            <Text style={styles.buttonText}>СОХРАНИТЬ</Text>
                         </TouchableHighlight>
                     </View>
                 </ScrollView>
