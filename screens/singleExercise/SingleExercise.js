@@ -7,10 +7,13 @@ import {
     View,
     ToolbarAndroid,
     TouchableHighlight,
+    TouchableNativeFeedback,
     ScrollView,
     TextInput,
     ToastAndroid,
-    WebView
+    WebView,
+    InteractionManager,
+    Image
 } from 'react-native';
 
 const styles = StyleSheet.create(require('../global.styles').styles);
@@ -44,12 +47,6 @@ class SingleExercise extends Component {
             last_reps_4: '0',
             last_reps_5: '0'
         };
-
-        // TABLE_RESULTS.remove({}, { multi: true });
-
-        // TABLE_RESULTS.find({}, function (error, items) {
-        //     console.log('all results', items);
-        // });
 
         this.getTodayResults();
         this.getLastResult();
@@ -246,6 +243,12 @@ class SingleExercise extends Component {
         });
     }
 
+    showStopwatch(muscleKey, muscleNameRus) {
+        this.props.navigator.push({
+            id: 'Stopwatch'
+        });
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -256,8 +259,8 @@ class SingleExercise extends Component {
                     subtitleColor="#FFF"
                     style={styles.toolbar}
                     actions={[
-                     {title: 'Статистика', icon: require('../../img/ico_stats.png'), show: 'always'},
-                     {title: 'О упражнении', icon: require('../../img/ico_about.png'), show: 'always'}
+                     {title: 'Статистика', icon: require('../../img/ico_chart.png'), show: 'always'},
+                     {title: 'О упражнении', icon: require('../../img/ico_video.png'), show: 'always'}
                     ]}
                     onActionSelected={this.onActionSelected.bind(this)} />
 
@@ -270,15 +273,20 @@ class SingleExercise extends Component {
                     
                     {this.printInputs()}
 
-                    <View style={exerciseStyles.buttonsHolder}>
-                        <TouchableHighlight
-                            onPress={this.saveResults.bind(this)}
-                            style={[styles.button, exerciseStyles.buttonSave]}
-                            underlayColor="#00E676">
-                            <Text style={styles.buttonText}>СОХРАНИТЬ</Text>
-                        </TouchableHighlight>
-                    </View>
+                    <TouchableNativeFeedback
+                        onPress={this.showStopwatch.bind(this)}>
+                        <View>
+                            <Text>stopwatch</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                 </ScrollView>
+
+                <TouchableNativeFeedback
+                    onPress={this.saveResults.bind(this)}>
+                    <View style={stylesTemp.addButton}>
+                        <Image source={require('../../img/ico_ok.png')} style={stylesTemp.buttonIco} />
+                    </View>
+                </TouchableNativeFeedback>
             </View>
         );
     }
@@ -291,5 +299,30 @@ class SingleExercise extends Component {
         }
     }
 }
+
+var stylesTemp = StyleSheet.create({
+    addButton: {
+        width: 56,
+        height: 56,
+        backgroundColor: '#E91E63',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 8,
+        position: 'absolute',
+        bottom: 20,
+        right: 20
+    },
+    addButtonText: {
+        fontSize: 31,
+        fontWeight: '100',
+        lineHeight: 43,
+        color: '#FFF'
+    },
+    buttonIco: {
+        width: 20,
+        height: 20
+    }
+});
 
 module.exports = SingleExercise;
