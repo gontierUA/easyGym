@@ -10,7 +10,9 @@ import {
     ScrollView,
     Image,
     ActivityIndicator,
-    Linking
+    Linking,
+    NetInfo,
+    Alert
 } from 'react-native';
 
 var _ = require('lodash');
@@ -42,10 +44,9 @@ class AboutExercise extends Component {
             .then((response) => response.json())
             .then((responseText) => {
                 _.forEach(responseText.items, function(value, key) {
-// id.videoId
                     _this.output.push(
                         <TouchableHighlight
-                            style={videoStyles.videoCard} 
+                            style={videoStyles.videoCard}
                             key={key}
                             onPress={_this.showVideoScreen.bind(_this, value.id.videoId)}>
                             <View>
@@ -75,7 +76,17 @@ class AboutExercise extends Component {
         Linking.openURL('https://www.youtube.com/watch?v=' + videoId).catch(err => console.error('An error occurred', err));
     }
 
+    checkConnection() {
+        NetInfo.isConnected.fetch().then(isConnected => {
+            if (!isConnected) {
+                Alert.alert('Требуется соединение с интернетом');
+            }
+        });
+    }
+
     render() {
+        this.checkConnection();
+
         if (this.state.loaded) {
             return (
                 <View style={{flex: 1}}>
