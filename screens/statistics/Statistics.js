@@ -7,7 +7,8 @@ import {
     View,
     ToolbarAndroid,
     TouchableNativeFeedback,
-    ScrollView
+    ScrollView,
+    ListView
 } from 'react-native';
 
 var _ = require('lodash');
@@ -22,63 +23,55 @@ class Statistics extends Component {
         super(props);
 
         this.state = {
-            loaded: false
+            dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2})
         };
 
-        this.output = [];
+        this.loadStatistics();
     }
 
-    showStatistics() {
+    loadStatistics() {
         var _this = this;
-        var i = 1;
 
         DB.TABLE_RESULTS.find({exerciseID: _this.props.exerciseID}).sort({date: -1}).exec(function (error, items) {
-            if (items.length) {
-                _.forEach(items, function(value, key) {
-                    _this.output.push(
-                        <View key={i} style={statisticsStyles.holder}>
-                            <Text style={statisticsStyles.date}>
-                                {value.date.substring(6, 8)}/{value.date.substring(4, 6)}/{value.date.substring(0, 4)} 
-                            </Text>
-                            <Text style={statisticsStyles.text}> {value.results[0][0]}x{value.results[0][1]}</Text>
-                            <Text style={statisticsStyles.text}> {value.results[1][0]}x{value.results[1][1]}</Text>
-                            <Text style={statisticsStyles.text}> {value.results[2][0]}x{value.results[2][1]}</Text>
-                            <Text style={statisticsStyles.text}> {value.results[3][0]}x{value.results[3][1]}</Text>
-                            <Text style={statisticsStyles.text}> {value.results[4][0]}x{value.results[4][1]}</Text>
-                        </View>
-                    );
-
-                    i++;
-                });
-
-                _this.setState({
-                    loaded: true
-                });
-            }
+            _this.setState({
+                dataSource: _this.state.dataSource.cloneWithRows(items)
+            });
         });
     }
 
-    render() {
-        if (this.state.loaded) {
-            return (
-                <View style={{flex: 1}}>
-                    <ToolbarAndroid
-                        title={"Cтатистика"}
-                        subtitle={this.props.exerciseName}
-                        titleColor="#FFF"
-                        subtitleColor="#FFF"
-                        style={styles.toolbar} />
+    _renderRow(item) {
+        return (
+            <View style={statisticsStyles.holder}>
+                <Text style={statisticsStyles.date}>
+                    {item.date.substring(6, 8)}/{item.date.substring(4, 6)}/{item.date.substring(0, 4)}
+                </Text>
+                <Text style={statisticsStyles.text}> {item.results[0][0]}x{item.results[0][1]}</Text>
+                <Text style={statisticsStyles.text}> {item.results[1][0]}x{item.results[1][1]}</Text>
+                <Text style={statisticsStyles.text}> {item.results[2][0]}x{item.results[2][1]}</Text>
+                <Text style={statisticsStyles.text}> {item.results[3][0]}x{item.results[3][1]}</Text>
+                <Text style={statisticsStyles.text}> {item.results[4][0]}x{item.results[4][1]}</Text>
+            </View>
+        );
+    }
 
-                    <ScrollView style={statisticsStyles.container}>
-                        {this.output}
-                    </ScrollView>
-                </View>
-            );
-        } else {
-            return (
-                <View style={{flex: 1}}>{this.showStatistics()}</View>
-            );
-        }
+    render() {
+        return (
+            <View style={{flex: 1}}>
+                <ToolbarAndroid
+                    title={"Cтатистика"}
+                    subtitle={this.props.exerciseName}
+                    titleColor="#FFF"
+                    subtitleColor="#FFF"
+                    style={styles.toolbar} />
+
+                <ScrollView style={statisticsStyles.screenHolder}>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderRow.bind(this)}>
+                    </ListView>
+                </ScrollView>
+            </View>
+        );
     }
 }
 
