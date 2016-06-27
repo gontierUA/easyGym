@@ -11,7 +11,6 @@ import Exercises from './screens/exercises/Exercises.js';
 import SingleExercise from './screens/singleExercise/SingleExercise.js';
 import Statistics from './screens/statistics/Statistics.js';
 import AboutExercise from './screens/aboutExercise/AboutExercise.js';
-import Stopwatch from './screens/stopwatch/Stopwatch.js';
 
 var _navigator;
 
@@ -73,10 +72,6 @@ class EasyGym extends Component{
                     exerciseID={route.exerciseID}
                     exerciseName={route.exerciseName}
                     muscleKey={route.muscleKey}
-                />);
-            case 'Stopwatch':
-                return (<Stopwatch
-                    navigator={navigator}
                 />);
         }
     }

@@ -62,5 +62,22 @@ export var styles = {
     },
     headerText: {
         fontSize: 15
+    },
+    stopwatchButton: {
+        position: 'absolute',
+        left: 20,
+        bottom: 20
+    },
+    stopwatchHolder: {
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    stopwatchText: {
+        fontSize: 48,
+        color: '#000'
+    },
+    stopwatchIco: {
+        width: 40,
+        height: 40
     }
 };

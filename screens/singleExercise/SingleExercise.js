@@ -45,7 +45,12 @@ class SingleExercise extends Component {
             last_reps_2: '0',
             last_reps_3: '0',
             last_reps_4: '0',
-            last_reps_5: '0'
+            last_reps_5: '0',
+            seconds: '00',
+            minutes: '00',
+            tempTime: null,
+            isStopwatchPlay: false,
+            stopwatchInterval: null
         };
 
         this.getTodayResults();
@@ -243,13 +248,51 @@ class SingleExercise extends Component {
         });
     }
 
-    showStopwatch(muscleKey, muscleNameRus) {
-        this.props.navigator.push({
-            id: 'Stopwatch'
-        });
+    startStopwatch() {
+        var _this = this;
+        var stopWatchSec = 0;
+        var stopWatchMin = 0;
+
+        if (_this.state.isStopwatchPlay) {
+            _this.setState({
+                isStopwatchPlay: false,
+                seconds: '00',
+                minutes: '00',
+                tempTime: new Date().getTime()
+            });
+
+            clearInterval(_this.state.stopwatchInterval);
+        } else {
+            _this.setState({
+                isStopwatchPlay: true,
+                tempTime: new Date().getTime()
+            });
+
+            _this.state.stopwatchInterval = setInterval(function() {
+                stopWatchSec = Math.floor((new Date().getTime() - _this.state.tempTime) / 1000);
+                stopWatchMin = parseInt(_this.state.minutes + 1);
+
+                if (stopWatchSec < 10) {
+                    stopWatchSec = '0' + stopWatchSec;
+                } else if (stopWatchSec > 60) {
+                    _this.setState({
+                        tempTime: new Date().getTime(),
+                        minutes: (stopWatchMin < 10) ? ('0' + stopWatchMin) : stopWatchMin
+                    });
+
+                    stopWatchSec = '00';
+                }
+
+                _this.setState({
+                    seconds: stopWatchSec
+                });
+            }, 1000);
+        }
     }
 
     render() {
+        var icon = (this.state.isStopwatchPlay) ? require('../../img/player_stop.png') : require('../../img/player_play.png');
+
         return (
             <View style={{flex: 1}}>
                 <ToolbarAndroid
@@ -270,16 +313,24 @@ class SingleExercise extends Component {
                         <Text style={exerciseStyles.headerText}>вес</Text>
                         <Text style={exerciseStyles.headerText}>повторения</Text>
                     </View>
-                    
+
                     {this.printInputs()}
 
-                    <TouchableNativeFeedback
-                        onPress={this.showStopwatch.bind(this)}>
-                        <View>
-                            <Text>stopwatch</Text>
+                </ScrollView>
+
+                <View style={exerciseStyles.stopwatchButton}>
+                    <TouchableNativeFeedback onPress={this.startStopwatch.bind(this)}>
+                        <View style={exerciseStyles.stopwatchHolder}>
+                            <Text style={exerciseStyles.stopwatchText}>
+                                {this.state.minutes}:{this.state.seconds}
+                            </Text>
+
+                            <Image
+                                source={icon}
+                                style={exerciseStyles.stopwatchIco} />
                         </View>
                     </TouchableNativeFeedback>
-                </ScrollView>
+                </View>
 
                 <TouchableNativeFeedback
                     onPress={this.saveResults.bind(this)}>
