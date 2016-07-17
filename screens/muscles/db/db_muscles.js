@@ -1,20 +1,30 @@
-export var Muscles = {
-    'chest': {
-        name: 'Грудь'
+export const MUSCLES = [
+    {
+        _id: 'chest',
+        title: 'Грудь'
     },
-    'biceps': {
-        name: 'Бицепс'
+    {
+        _id: 'biceps',
+        title: 'Бицепс'
     },
-    'back': {
-        name: 'Спина'
+    {
+        _id: 'back',
+        title: 'Спина'
     },
-    'triceps': {
-        name: 'Трицепс'
+    {
+        _id: 'triceps',
+        title: 'Трицепс'
     },
-    'legs': {
-        name: 'Ноги'
+    {
+        _id: 'legs',
+        title: 'Ноги'
     },
-    'shoulders': {
-        name: 'Плечи'
+    {
+        _id: 'shoulders',
+        title: 'Плечи'
+    },
+    {
+        _id: 'abs',
+        title: 'Пресс'
     }
-};
+];

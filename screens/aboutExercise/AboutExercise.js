@@ -36,7 +36,7 @@ class AboutExercise extends Component {
 
         fetch('https://www.googleapis.com/youtube/v3/search?part=snippet' +
             '&order=relevance' +
-            '&q=тренировка+' + this.props.exerciseName +
+            '&q=техника+' + this.props.exerciseName +
             '&type=video' +
             '&videoDefinition=high' +
             '&maxResults=10' +

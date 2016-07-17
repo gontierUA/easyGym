@@ -297,9 +297,7 @@ class SingleExercise extends Component {
             <View style={{flex: 1}}>
                 <ToolbarAndroid
                     title={this.props.muscleNameRus}
-                    subtitle={this.props.exerciseName}
                     titleColor="#FFF"
-                    subtitleColor="#FFF"
                     style={styles.toolbar}
                     actions={[
                      {title: 'Статистика', icon: require('../../img/ico_chart.png'), show: 'always'},
@@ -310,9 +308,15 @@ class SingleExercise extends Component {
                 <ScrollView style={exerciseStyles.container}>
 
                     <View style={exerciseStyles.header}>
+                        <Text style={exerciseStyles.title}>{this.props.exerciseName}</Text>
+                    </View>
+
+                    {/*
+                    <View>
                         <Text style={exerciseStyles.headerText}>вес</Text>
                         <Text style={exerciseStyles.headerText}>повторения</Text>
                     </View>
+                    */}
 
                     {this.printInputs()}
 

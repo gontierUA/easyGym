@@ -17,6 +17,10 @@ export var styles = {
         lineHeight: 43,
         color: '#FFF'
     },
+    buttonIco: {
+        width: 20,
+        height: 20
+    },
     modalBg: {
         flex: 1,
         alignItems: 'center',

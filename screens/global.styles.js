@@ -45,20 +45,13 @@ export var styles = {
     buttonText: {
         textAlign: 'center',
         color: '#FFF',
-        fontSize: 14
+        fontSize: 14,
+        marginBottom: 30
     },
     screenTitle: {
         fontSize: 21,
         fontWeight: 'bold',
         color: 'black',
         marginBottom: 10
-    },
-    video: {
-        backgroundColor: '#FFAAAA',
-        width: Dimensions.get('window').height,
-        height: Dimensions.get('window').height - 50,
-        transform: [{
-            rotate: '90deg'
-        }]
     }
 };

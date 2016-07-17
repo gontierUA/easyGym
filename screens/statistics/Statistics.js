@@ -43,15 +43,23 @@ class Statistics extends Component {
         return (
             <View style={statisticsStyles.holder}>
                 <Text style={statisticsStyles.date}>
-                    {item.date.substring(6, 8)}/{item.date.substring(4, 6)}/{item.date.substring(0, 4)}
+                    {item.date.substring(6, 8)}/{item.date.substring(4, 6)}/{item.date.substring(2, 4)}
                 </Text>
-                <Text style={statisticsStyles.text}> {item.results[0][0]}x{item.results[0][1]}</Text>
-                <Text style={statisticsStyles.text}> {item.results[1][0]}x{item.results[1][1]}</Text>
-                <Text style={statisticsStyles.text}> {item.results[2][0]}x{item.results[2][1]}</Text>
-                <Text style={statisticsStyles.text}> {item.results[3][0]}x{item.results[3][1]}</Text>
-                <Text style={statisticsStyles.text}> {item.results[4][0]}x{item.results[4][1]}</Text>
+                <Text style={statisticsStyles.text}>{item.results[0][0]}x{item.results[0][1]}</Text>
+                <Text style={statisticsStyles.text}>{item.results[1][0]}x{item.results[1][1]}</Text>
+                <Text style={statisticsStyles.text}>{item.results[2][0]}x{item.results[2][1]}</Text>
+                <Text style={statisticsStyles.text}>{item.results[3][0]}x{item.results[3][1]}</Text>
+                <Text style={statisticsStyles.text}>{item.results[4][0]}x{item.results[4][1]}</Text>
             </View>
         );
+    }
+
+    _renderHeader() {
+        return(
+            <View style={statisticsStyles.header}>
+                <Text style={statisticsStyles.title}>{this.props.exerciseName}</Text>
+            </View>
+        )
     }
 
     render() {
@@ -59,14 +67,13 @@ class Statistics extends Component {
             <View style={{flex: 1}}>
                 <ToolbarAndroid
                     title={"Cтатистика"}
-                    subtitle={this.props.exerciseName}
                     titleColor="#FFF"
-                    subtitleColor="#FFF"
                     style={styles.toolbar} />
 
                 <ScrollView style={statisticsStyles.screenHolder}>
                     <ListView
                         dataSource={this.state.dataSource}
+                        renderHeader={this._renderHeader.bind(this)}
                         renderRow={this._renderRow.bind(this)}>
                     </ListView>
                 </ScrollView>

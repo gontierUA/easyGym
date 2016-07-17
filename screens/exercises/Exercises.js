@@ -9,10 +9,13 @@ import {
     TouchableNativeFeedback,
     ScrollView,
     Modal,
-    TextInput
+    TextInput,
+    InteractionManager,
+    ListView,
+    LayoutAnimation,
+    Image,
+    Alert
 } from 'react-native';
-
-var _ = require('lodash');
 
 const styles = StyleSheet.create(require('../global.styles').styles);
 const stylesTemp = StyleSheet.create(require('./exercises.styles').styles);
@@ -24,21 +27,15 @@ class Exercises extends Component {
         super(props);
 
         this.state = {
-            loaded: false,
             newExercise: '',
-            isModalVisible: false
+            isModalVisible: false,
+            dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2})
         };
 
-        this.output = [];
-    }
+        this.loadExercises();
 
-    showSingleExercise(exerciseID, exerciseName) {
-        this.props.navigator.push({
-            id: 'SingleExercise',
-            exerciseName: exerciseName,
-            exerciseID: exerciseID,
-            muscleKey: this.props.muscleKey,
-            muscleNameRus: this.props.muscleNameRus
+        DB.TABLE_RESULTS.find({}, function (error, items) {
+            console.log('results', items);
         });
     }
 
@@ -46,19 +43,48 @@ class Exercises extends Component {
         var _this = this;
 
         DB.TABLE_EXERCISES.find({type: _this.props.muscleKey}, function (error, items) {
-            _.forEach(items, function(value, key) {
-                _this.output.push(
-                    <TouchableNativeFeedback key={key} onPress={_this.showSingleExercise.bind(_this, value._id, value.title)}>
-                        <View style={styles.card}>
-                            <Text style={styles.cardTitle}>{value.title}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                );
-            });
+            console.log('ex', items);
 
             _this.setState({
-                loaded: true
+                dataSource: _this.state.dataSource.cloneWithRows(items)
             });
+        });
+    }
+
+    _renderRow(item) {
+        return (
+            <TouchableNativeFeedback 
+                key={item._id} 
+                onPress={this.showSingleExercise.bind(this, item._id, item.title)}
+                onLongPress={this.showDeleteDialog.bind(this, item._id, item.title)}>
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>{item.title}</Text>
+                </View>
+            </TouchableNativeFeedback>
+        );
+    }
+
+    showDeleteDialog(id, title) {
+        var _this = this;
+
+        Alert.alert(
+            title,
+            'Удалить упражнение и все его результаты?',
+            [
+                {text: 'Отменить', onPress: () => console.log('Cancel Pressed')},
+                {text: 'Удалить', onPress: _this.removeExercise.bind(_this, id)}
+            ]
+        )
+    }
+
+    removeExercise(id) {
+        var _this = this;
+
+        //TODO: also need to remove results
+
+        DB.TABLE_EXERCISES.remove({_id: id}, {}, function (error, numRemoved) {
+            _this.loadExercises();
+            _this.render();
         });
     }
 
@@ -71,10 +97,7 @@ class Exercises extends Component {
 
             this._setModalVisibility(false);
 
-            this.output = [];
-
             this.setState({
-                loaded: false,
                 newExercise: ''
             });
 
@@ -86,65 +109,81 @@ class Exercises extends Component {
         this.setState({isModalVisible: visibility});
     }
 
-    render() {
-        if (this.state.loaded) {
-            return (
-                <View style={{flex: 1}}>
-                    <Modal
-                        visible={this.state.isModalVisible}
-                        animationType="fade"
-                        transparent={true}
-                        onRequestClose={() => {this._setModalVisibility.bind(this, false)}}
-                    >
-                        <View style={stylesTemp.modalBg}>
-                            <View style={stylesTemp.modal}>
-                                <Text style={stylesTemp.modalTitle}>Добавить новое упражнение?</Text>
-                                <TextInput
-                                    placeholder="Название"
-                                    underlineColorAndroid={(this.state.newExercise) ? '#00C853' : '#D50000'}
-                                    onChangeText={(val) => this.setState({newExercise: val})}
-                                />
+    modal() {
+        return (
+            <Modal
+                visible={this.state.isModalVisible}
+                animationType="fade"
+                transparent={true}
+                onRequestClose={() => {this._setModalVisibility.bind(this, false)}}
+            >
+                <View style={stylesTemp.modalBg}>
+                    <View style={stylesTemp.modal}>
+                        <Text style={stylesTemp.modalTitle}>Добавить новое упражнение?</Text>
+                        <TextInput
+                            placeholder="Название"
+                            underlineColorAndroid={(this.state.newExercise) ? '#00C853' : '#D50000'}
+                            onChangeText={(val) => this.setState({newExercise: val})}
+                        />
 
-                                <View style={stylesTemp.buttonsHolder}>
-                                    <TouchableNativeFeedback
-                                        onPress={this._setModalVisibility.bind(this, false)}
-                                        style={stylesTemp.modalButton}>
-                                        <View>
-                                            <Text style={stylesTemp.modalButtonText}>ОТМЕНИТЬ</Text>
-                                        </View>
-                                    </TouchableNativeFeedback>
-
-                                    <TouchableNativeFeedback
-                                        onPress={this.addExercise.bind(this)}
-                                        style={stylesTemp.modalButton}>
-                                        <View>
-                                            <Text style={stylesTemp.modalButtonText}>ДОБАВИТЬ</Text>
-                                        </View>
-                                    </TouchableNativeFeedback>
+                        <View style={stylesTemp.buttonsHolder}>
+                            <TouchableNativeFeedback
+                                onPress={this._setModalVisibility.bind(this, false)}
+                                style={stylesTemp.modalButton}>
+                                <View>
+                                    <Text style={stylesTemp.modalButtonText}>ОТМЕНИТЬ</Text>
                                 </View>
-                            </View>
+                            </TouchableNativeFeedback>
+
+                            <TouchableNativeFeedback
+                                onPress={this.addExercise.bind(this)}
+                                style={stylesTemp.modalButton}>
+                                <View>
+                                    <Text style={stylesTemp.modalButtonText}>ДОБАВИТЬ</Text>
+                                </View>
+                            </TouchableNativeFeedback>
                         </View>
-                    </Modal>
-
-                    <ToolbarAndroid title={this.props.muscleNameRus} titleColor="#FFF" style={styles.toolbar} />
-
-                    <ScrollView style={styles.screenHolder}>
-                        <View>{this.output}</View>
-                    </ScrollView>
-
-                    <TouchableNativeFeedback
-                        onPress={this._setModalVisibility.bind(this, true)}>
-                        <View style={stylesTemp.addButton}>
-                            <Text style={stylesTemp.addButtonText}>+</Text>
-                        </View>
-                    </TouchableNativeFeedback>
+                    </View>
                 </View>
-            );
-        } else {
-            return (
-                <View style={{flex: 1}}>{this.loadExercises()}</View>
-            );
-        }
+            </Modal>
+        );
+    }
+
+    render() {
+        return (
+            <View style={{flex: 1}}>
+
+                {this.modal()}
+
+                <ToolbarAndroid 
+                    title={this.props.muscleNameRus} 
+                    titleColor="#FFF" 
+                    style={styles.toolbar} />
+
+                <ScrollView style={styles.screenHolder}>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderRow.bind(this)}>
+                    </ListView>
+                </ScrollView>
+
+                <TouchableNativeFeedback onPress={this._setModalVisibility.bind(this, true)}>
+                    <View style={stylesTemp.addButton}>
+                        <Image source={require('../../img/ico_plus.png')} style={stylesTemp.buttonIco} />
+                    </View>
+                </TouchableNativeFeedback>
+            </View>
+        );
+    }
+
+    showSingleExercise(exerciseID, exerciseName) {
+        this.props.navigator.push({
+            id: 'SingleExercise',
+            exerciseName: exerciseName,
+            exerciseID: exerciseID,
+            muscleKey: this.props.muscleKey,
+            muscleNameRus: this.props.muscleNameRus
+        });
     }
 }
 

@@ -1,6 +1,17 @@
 export var styles = {
+    header: {
+        height: 64,
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingLeft: 5
+    },
+    title: {
+        fontSize: 20,
+        color: 'rgba(0, 0, 0, 0.87)'
+    },
     container: {
         padding: 15,
+        paddingTop: 0,
         backgroundColor: '#FFF'
     },
     resultsHolder: {
@@ -53,13 +64,13 @@ export var styles = {
     buttonText: {
         color: '#FFF'
     },
-    header: {
-        paddingLeft: 65,
-        paddingRight: 25,
-        paddingBottom: 5,
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-    },
+    // header: {
+    //     paddingLeft: 65,
+    //     paddingRight: 25,
+    //     paddingBottom: 5,
+    //     justifyContent: 'space-between',
+    //     flexDirection: 'row'
+    // },
     headerText: {
         fontSize: 15
     },
